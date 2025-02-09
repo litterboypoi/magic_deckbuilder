@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Deck Builder Tutorial"
 config/tags=PackedStringArray("gamelab")
-run/main_scene="res://scenes/run/run.tscn"
-config/features=PackedStringArray("4.3", "Mobile")
+run/main_scene="uid://3sehhvh2xdl0"
+config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.png"
 
 [autoload]
@@ -23,6 +23,7 @@ Shaker="*res://global/shaker.gd"
 MusicPlayer="*res://global/music_player.tscn"
 SFXPlayer="*res://global/sfx_player.tscn"
 RNG="*res://global/rng.gd"
+TimeSystem="*res://global/time_system.gd"
 
 [debug]
 
@@ -74,6 +75,8 @@ pause={
 2d_physics/layer_2="card_drop_area"
 2d_physics/layer_3="enemies"
 2d_physics/layer_4="map_rooms"
+2d_physics/layer_9="ground"
+2d_physics/layer_10="projectile"
 
 [rendering]
 

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://3sehhvh2xdl0"]
+
+[ext_resource type="Script" uid="uid://c8hveb1dqme7g" path="res://test_scenes/projectile_playground.gd" id="1_dmwmx"]
+[ext_resource type="PackedScene" uid="uid://dwlvkbm0qgltv" path="res://scenes/projectile/Projectile.tscn" id="1_hu6tn"]
+
+[node name="ProjectilePlayground" type="Node2D"]
+script = ExtResource("1_dmwmx")
+
+[node name="Projectile" parent="." instance=ExtResource("1_hu6tn")]
+position = Vector2(6, 53)
+UNIT_GRAVITY = 80.0
+
+[node name="Ground" type="StaticBody2D" parent="." groups=["ground"]]
+collision_layer = 256
+collision_mask = 256
+
+[node name="Polygon2D" type="Polygon2D" parent="Ground"]
+color = Color(0.714111, 0.483662, 0.269523, 1)
+polygon = PackedVector2Array(-1, 126, 261, 126, 261, 146, -2, 145)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground"]
+polygon = PackedVector2Array(-1, 126, 261, 126, 261, 146, -2, 145)

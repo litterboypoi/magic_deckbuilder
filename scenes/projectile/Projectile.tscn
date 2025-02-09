@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwlvkbm0qgltv"]
+
+[ext_resource type="Script" uid="uid://bvb7q5cnxd1c5" path="res://scenes/projectile/projectile.gd" id="1_nskuf"]
+[ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="2_cm8q0"]
+[ext_resource type="Script" uid="uid://b3u041bh57cia" path="res://scenes/projectile/transmitter.gd" id="3_bneoo"]
+[ext_resource type="Texture2D" uid="uid://ch2f548pjl5k" path="res://art/aim_arrow.png" id="4_8gwhl"]
+[ext_resource type="PackedScene" uid="uid://qe3815xmfq7y" path="res://scenes/trajectory_line/trajectory_line.tscn" id="5_bwggc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cm8q0"]
+
+[node name="Projectile" type="CharacterBody2D"]
+collision_layer = 512
+collision_mask = 256
+input_pickable = true
+script = ExtResource("1_nskuf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cm8q0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cm8q0")
+
+[node name="Transmitter" type="Node2D" parent="." node_paths=PackedStringArray("projectile")]
+script = ExtResource("3_bneoo")
+projectile = NodePath("..")
+
+[node name="Arrow" type="Sprite2D" parent="Transmitter"]
+visible = false
+texture = ExtResource("4_8gwhl")
+
+[node name="TrajectoryLine" parent="Transmitter" node_paths=PackedStringArray("collision_shape") instance=ExtResource("5_bwggc")]
+visible = false
+collision_shape = NodePath("../../CollisionShape2D")
+
+[connection signal="mouse_entered" from="." to="Transmitter" method="_on_projectile_mouse_entered"]
+[connection signal="mouse_exited" from="." to="Transmitter" method="_on_projectile_mouse_exited"]

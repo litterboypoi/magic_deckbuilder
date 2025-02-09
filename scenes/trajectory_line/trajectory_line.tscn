@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://qe3815xmfq7y"]
+
+[ext_resource type="Texture2D" uid="uid://cej5lfdg1ld8y" path="res://art/dotted_line.png" id="1_h3y0a"]
+[ext_resource type="Script" uid="uid://onv638thjkav" path="res://scenes/trajectory_line/trajectory_line.gd" id="1_hbd7j"]
+
+[node name="TrajectoryLine" type="Line2D"]
+texture_repeat = 2
+width = 4.0
+texture = ExtResource("1_h3y0a")
+texture_mode = 1
+script = ExtResource("1_hbd7j")
+
+[node name="CollisionTest" type="CharacterBody2D" parent="."]
+collision_layer = 256
+collision_mask = 256
