@@ -32,7 +32,6 @@ func _process(delta: float) -> void:
 		else:
 		# 只根据当前速度更新位置
 			position += velocity * delta
-	
 
 
 func fire(direction: Vector2) -> void:

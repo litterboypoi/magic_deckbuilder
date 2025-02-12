@@ -1,22 +1,22 @@
 [gd_scene load_steps=24 format=3 uid="uid://cahno8aso5net"]
 
-[ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_4s751"]
+[ext_resource type="Script" uid="uid://g067e57qj7kx" path="res://scenes/battle/battle.gd" id="1_4s751"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="1_ybkl6"]
 [ext_resource type="PackedScene" uid="uid://d0efyathkfg74" path="res://scenes/enemy/enemy.tscn" id="2_02s5s"]
-[ext_resource type="Script" path="res://scenes/ui/hand.gd" id="2_uaw60"]
+[ext_resource type="Script" uid="uid://xyy3ixnu4qfo" path="res://scenes/ui/hand.gd" id="2_uaw60"]
 [ext_resource type="PackedScene" uid="uid://2n4lap6w3pde" path="res://scenes/player/player.tscn" id="3_dpj45"]
 [ext_resource type="AudioStream" uid="uid://dpdenqqbovwfq" path="res://art/8_bit_iced_village_lofi.mp3" id="3_nuoky"]
 [ext_resource type="PackedScene" uid="uid://dwt63vvppukag" path="res://scenes/card_target_selector/card_target_selector.tscn" id="3_vyv1n"]
-[ext_resource type="Script" path="res://scenes/enemy/enemy_handler.gd" id="4_41vpn"]
+[ext_resource type="Script" uid="uid://dvrotkee7b8hx" path="res://scenes/enemy/enemy_handler.gd" id="4_41vpn"]
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="4_fwb8a"]
 [ext_resource type="Resource" uid="uid://bnmpwl3k8qb8n" path="res://enemies/crab/crab_enemy.tres" id="5_5flmk"]
-[ext_resource type="Script" path="res://scenes/ui/battle_ui.gd" id="7_18vit"]
-[ext_resource type="Script" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
+[ext_resource type="Script" uid="uid://b5tmd7fd1o6j3" path="res://scenes/ui/battle_ui.gd" id="7_18vit"]
+[ext_resource type="Script" uid="uid://dl1yosajvpcd7" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="13_523u4"]
-[ext_resource type="Script" path="res://scenes/ui/red_flash.gd" id="15_qvh8t"]
+[ext_resource type="Script" uid="uid://bxx6kgg3pxjl7" path="res://scenes/ui/red_flash.gd" id="15_qvh8t"]
 [ext_resource type="PackedScene" uid="uid://dx377oa3pkut" path="res://scenes/ui/card_pile_opener.tscn" id="17_djv03"]
 [ext_resource type="PackedScene" uid="uid://dfig8d63ggof1" path="res://scenes/ui/battle_over_panel.tscn" id="17_xrby7"]
 [ext_resource type="Texture2D" uid="uid://c7c8cgkuro8b3" path="res://art/discard.png" id="18_g47ei"]
@@ -64,6 +64,8 @@ stats = ExtResource("8_d4c2d")
 [node name="Player" parent="." instance=ExtResource("3_dpj45")]
 position = Vector2(45, 80)
 stats = ExtResource("4_fwb8a")
+
+[node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
 
 [node name="CardTargetSelector" parent="." instance=ExtResource("3_vyv1n")]
 

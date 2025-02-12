@@ -18,6 +18,8 @@ const RARITY_COLORS := {
 @export var target: Target
 @export var cost: int
 @export var exhausts: bool = false
+# 只有是Attack时需要附值
+@export var attack_projectile: Resource
 
 @export_group("Card Visuals")
 @export var icon: Texture
@@ -27,6 +29,10 @@ const RARITY_COLORS := {
 
 func is_single_targeted() -> bool:
 	return target == Target.SINGLE_ENEMY
+
+
+func is_attack_card() -> bool:
+	return type == Type.ATTACK
 
 
 func _get_targets(targets: Array[Node]) -> Array[Node]:
@@ -46,7 +52,7 @@ func _get_targets(targets: Array[Node]) -> Array[Node]:
 			return []
 
 
-func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler) -> void:
+func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler, direction: Vector2 = Vector2.RIGHT) -> void:
 	Events.card_played.emit(self)
 	char_stats.mana -= cost
 	

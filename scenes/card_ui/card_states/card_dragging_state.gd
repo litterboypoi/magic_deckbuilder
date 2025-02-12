@@ -27,6 +27,13 @@ func on_input(event: InputEvent) -> void:
 	var mouse_motion := event is InputEventMouseMotion
 	var cancel = event.is_action_pressed("right_mouse")
 	var confirm = event.is_action_released("left_mouse") or event.is_action_pressed("left_mouse")
+	var attack_card := card_ui.card.is_attack_card()
+
+	# 如果是攻击牌，切换至瞄准状态获取发射方向。
+	if attack_card and mouse_motion and card_ui.targets.size() > 0:
+		transition_requested.emit(self, CardState.State.AIMING)
+		return
+	
 
 	if single_targeted and mouse_motion and card_ui.targets.size() > 0:
 		transition_requested.emit(self, CardState.State.AIMING)

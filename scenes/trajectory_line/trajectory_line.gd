@@ -6,12 +6,14 @@ extends Line2D
 
 
 func _ready() -> void:
-	collision_test.add_child(collision_shape.duplicate())
+	# TODO collision_shape要从card传进来
+	#collision_test.add_child(collision_shape.duplicate())
+	pass
+	
 
 
 func update_trajectory(direction: Vector2, speed: float, gravity: float, max_rebound: int):
 	clear_points()
-	
 
 	var time_step : float = 0.01  # 每个时间步的间隔
 	var max_time : float = 3.0  # 最大计算时间，用来限制轨迹的长度
@@ -29,9 +31,7 @@ func update_trajectory(direction: Vector2, speed: float, gravity: float, max_reb
 		vel += g * time_step
 		var collision = collision_test.move_and_collide(vel * time_step, true)
 		if collision and current_rebound_count < max_rebound:
-			print(collision.get_normal())
-			#vel = vel.bounce(collision.get_normal()) * 0.7
-			vel = Vector2(vel.x, -vel.y * 0.7)
+			vel = vel.bounce(collision.get_normal()) * 0.7
 			current_rebound_count += 1
 		pos += vel * time_step
 		time += time_step  # 增加时间步长

@@ -9,6 +9,12 @@ signal card_played(card: Card)
 signal card_tooltip_requested(card: Card)
 signal tooltip_hide_requested
 
+# Aim-related events
+signal projectile_aim_started(speed: float, gravity: float, max_rebound: int)
+signal projectile_aim_ended
+signal aim_direction_changed(diretion: Vector2)
+
+
 # Player-related events
 signal player_hand_drawn
 signal player_hand_discarded

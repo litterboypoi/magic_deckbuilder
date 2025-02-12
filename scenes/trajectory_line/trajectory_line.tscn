@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://qe3815xmfq7y"]
+[gd_scene load_steps=4 format=3 uid="uid://qe3815xmfq7y"]
 
 [ext_resource type="Texture2D" uid="uid://cej5lfdg1ld8y" path="res://art/dotted_line.png" id="1_h3y0a"]
 [ext_resource type="Script" uid="uid://onv638thjkav" path="res://scenes/trajectory_line/trajectory_line.gd" id="1_hbd7j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h3y0a"]
 
 [node name="TrajectoryLine" type="Line2D"]
 texture_repeat = 2
@@ -13,3 +15,6 @@ script = ExtResource("1_hbd7j")
 [node name="CollisionTest" type="CharacterBody2D" parent="."]
 collision_layer = 256
 collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionTest"]
+shape = SubResource("CircleShape2D_h3y0a")
