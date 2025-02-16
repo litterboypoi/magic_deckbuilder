@@ -1,14 +1,24 @@
-[gd_scene load_steps=11 format=3 uid="uid://b60egpxyditoc"]
+[gd_scene load_steps=16 format=3 uid="uid://b60egpxyditoc"]
 
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_yv4pj"]
 [ext_resource type="Script" uid="uid://dpdhmeo0tcovn" path="res://scenes/card_ui/card_ui.gd" id="2_uam7p"]
 [ext_resource type="PackedScene" uid="uid://b362c35jf6fmy" path="res://scenes/ui/card_visuals.tscn" id="3_4urr7"]
 [ext_resource type="Script" uid="uid://2xbac1ysomp8" path="res://scenes/card_ui/card_state_machine.gd" id="3_tqtyy"]
+[ext_resource type="Script" uid="uid://cki2edhf8yjpm" path="res://scenes/card_ui/card_outline_progress.gd" id="4_js3ux"]
+[ext_resource type="Shader" uid="uid://di4vfjvn6ieel" path="res://scenes/card_ui/outline_progress.gdshader" id="4_opj8w"]
+[ext_resource type="Theme" uid="uid://bkxtjv6rycmv6" path="res://other_themes/panel_outline_border.tres" id="4_qeblu"]
 [ext_resource type="Script" uid="uid://c8kwc68fv4giv" path="res://scenes/card_ui/card_states/card_base_state.gd" id="4_snb4g"]
 [ext_resource type="Script" uid="uid://cudpprejxdrc0" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
 [ext_resource type="Script" uid="uid://3b6yxmrc7wx0" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="6_jk8rm"]
 [ext_resource type="Script" uid="uid://djvtkhhr2xqha" path="res://scenes/card_ui/card_states/card_released_state.gd" id="7_k7cbr"]
 [ext_resource type="Script" uid="uid://dn0ii4fg225ed" path="res://scenes/card_ui/card_states/card_aiming_state.gd" id="8_ew01p"]
+[ext_resource type="Script" uid="uid://b5piemyysbgql" path="res://scenes/card_ui/card_spelling_state.gd" id="11_25o76"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_25o76"]
+shader = ExtResource("4_opj8w")
+shader_parameter/progress = 0.0
+shader_parameter/outline_width = 3.0
+shader_parameter/node_size = Vector2(29, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ly5x7"]
 size = Vector2(25, 30)
@@ -19,8 +29,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -231.0
-offset_bottom = -114.0
+offset_left = 55.0
+offset_top = 20.0
+offset_right = -176.0
+offset_bottom = -94.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_yv4pj")
@@ -30,6 +42,22 @@ script = ExtResource("2_uam7p")
 offset_right = 25.0
 offset_bottom = 30.0
 mouse_filter = 2
+
+[node name="CardOutlineProgress" type="Panel" parent="CardVisuals"]
+material = SubResource("ShaderMaterial_25o76")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("4_qeblu")
+script = ExtResource("4_js3ux")
 
 [node name="DropPointDetector" type="Area2D" parent="."]
 collision_mask = 2
@@ -54,13 +82,17 @@ state = 1
 script = ExtResource("6_jk8rm")
 state = 2
 
+[node name="CardSpellingState" type="Node" parent="CardStateMachine"]
+script = ExtResource("11_25o76")
+state = 3
+
 [node name="CardReleasedState" type="Node" parent="CardStateMachine"]
 script = ExtResource("7_k7cbr")
-state = 4
+state = 5
 
 [node name="CardAimingState" type="Node" parent="CardStateMachine"]
 script = ExtResource("8_ew01p")
-state = 3
+state = 4
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

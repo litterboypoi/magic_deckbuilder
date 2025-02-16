@@ -2,6 +2,10 @@ extends CardState
 
 
 func enter() -> void:
+	if card_ui.card.is_attack_card():
+		Events.tooltip_hide_requested.emit()
+		card_ui.play()
+		return
 	if card_ui.targets.is_empty():
 		return
 

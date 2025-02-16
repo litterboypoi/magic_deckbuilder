@@ -17,9 +17,11 @@ const RARITY_COLORS := {
 @export var rarity: Rarity
 @export var target: Target
 @export var cost: int
+@export var spell_time: float
+@export var delay_time: float = 0
 @export var exhausts: bool = false
 # 只有是Attack时需要附值
-@export var attack_projectile: Resource
+@export var attack_projectile: PackedScene
 
 @export_group("Card Visuals")
 @export var icon: Texture
@@ -52,7 +54,7 @@ func _get_targets(targets: Array[Node]) -> Array[Node]:
 			return []
 
 
-func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler, direction: Vector2 = Vector2.RIGHT) -> void:
+func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler, player: Player, direction: Vector2 = Vector2.RIGHT) -> void:
 	Events.card_played.emit(self)
 	char_stats.mana -= cost
 	
@@ -60,9 +62,16 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 		apply_effects(targets, modifiers)
 	else:
 		apply_effects(_get_targets(targets), modifiers)
+	
+	apply_effects_v2(player, direction, modifiers)
+	TimeSystem.request_time(delay_time)
 
 
 func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:
+	pass
+
+
+func apply_effects_v2(player: Player, direction: Vector2, _modifiers: ModifierHandler) -> void:
 	pass
 
 

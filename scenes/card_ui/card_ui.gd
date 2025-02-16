@@ -2,6 +2,7 @@ class_name CardUI
 extends Control
 
 signal reparent_requested(which_card_ui: CardUI)
+signal spell_finished
 
 const BASE_STYLEBOX := preload("res://scenes/card_ui/card_base_stylebox.tres")
 const DRAG_STYLEBOX := preload("res://scenes/card_ui/card_drag_stylebox.tres")
@@ -15,13 +16,16 @@ const HOVER_STYLEBOX := preload("res://scenes/card_ui/card_hover_stylebox.tres")
 @onready var drop_point_detector: Area2D = $DropPointDetector
 @onready var card_state_machine: CardStateMachine = $CardStateMachine
 @onready var targets: Array[Node] = []
-var aim_direction: Vector2 = Vector2.ZERO
+@onready var card_outline_progress: OutlineProgressPanel = $CardVisuals/CardOutlineProgress
+
 
 var original_index := 0
 var parent: Control
 var tween: Tween
 var playable := true : set = _set_playable
 var disabled := true
+var aim_direction: Vector2 = Vector2.ZERO
+var current_spell_time: float = 0
 
 
 func _ready() -> void:
@@ -41,11 +45,24 @@ func animate_to_position(new_position: Vector2, duration: float) -> void:
 	tween.tween_property(self, "global_position", new_position, duration)
 
 
+func is_spell_finished() -> bool:
+	return card_outline_progress.progress == 1
+
+
+func spell_card(delta_time: float):
+	current_spell_time += delta_time
+	if card.spell_time == 0:
+		card_outline_progress.progress = 1
+	else:
+		card_outline_progress.progress = current_spell_time / card.spell_time
+	if card_outline_progress.progress == 1:
+		spell_finished.emit()
+
 func play() -> void:
 	if not card:
 		return
-	
-	card.play(targets, char_stats, player_modifiers)
+	var player = get_tree().get_first_node_in_group("player")
+	card.play(targets, char_stats, player_modifiers, player, aim_direction)
 	queue_free()
 
 

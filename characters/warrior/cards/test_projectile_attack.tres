@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AttackCard" load_steps=5 format=3 uid="uid://bo7y4ygok7gvt"]
+
+[ext_resource type="Script" uid="uid://dasvnotrby3jh" path="res://custom_resources/attack_card.gd" id="1_pa8kg"]
+[ext_resource type="PackedScene" uid="uid://dwlvkbm0qgltv" path="res://scenes/projectile/Projectile.tscn" id="1_wgin7"]
+[ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="2_7kfty"]
+[ext_resource type="AudioStream" uid="uid://dixklg6g4jnsq" path="res://art/slash.ogg" id="4_dr88d"]
+
+[resource]
+script = ExtResource("1_pa8kg")
+id = "test_projectile_attack"
+type = 0
+rarity = 0
+target = 0
+cost = 1
+spell_time = 2.0
+delay_time = 0.5
+exhausts = false
+attack_projectile = ExtResource("1_wgin7")
+icon = ExtResource("2_7kfty")
+tooltip_text = "projectile"
+sound = ExtResource("4_dr88d")
+metadata/_custom_type_script = ExtResource("1_pa8kg")

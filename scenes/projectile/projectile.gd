@@ -16,6 +16,7 @@ var time_scale: float = 0
 
 func _ready() -> void:
 	TimeSystem.time_scale_changed.connect(on_time_scale_changed)
+	time_scale = TimeSystem.default_time_scale                   
 
 
 func _process(delta: float) -> void:
@@ -39,5 +40,5 @@ func fire(direction: Vector2) -> void:
 	velocity = v_speed * UNIT_SPEED * direction.normalized()
 	
 
-func on_time_scale_changed(scale: float):
-	time_scale = scale
+func on_time_scale_changed(_time_scale: float):
+	time_scale = _time_scale
