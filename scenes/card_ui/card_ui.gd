@@ -143,3 +143,7 @@ func _on_card_drag_or_aim_ended(_card: CardUI) -> void:
 
 func _on_char_stats_changed() -> void:
 	playable = char_stats.can_play_card(card)
+
+
+func _to_string() -> String:
+	return "card_ui:[%s]" % card

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b60egpxyditoc"]
+[gd_scene load_steps=17 format=3 uid="uid://b60egpxyditoc"]
 
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="1_yv4pj"]
 [ext_resource type="Script" uid="uid://dpdhmeo0tcovn" path="res://scenes/card_ui/card_ui.gd" id="2_uam7p"]
@@ -13,8 +13,9 @@
 [ext_resource type="Script" uid="uid://djvtkhhr2xqha" path="res://scenes/card_ui/card_states/card_released_state.gd" id="7_k7cbr"]
 [ext_resource type="Script" uid="uid://dn0ii4fg225ed" path="res://scenes/card_ui/card_states/card_aiming_state.gd" id="8_ew01p"]
 [ext_resource type="Script" uid="uid://b5piemyysbgql" path="res://scenes/card_ui/card_spelling_state.gd" id="11_25o76"]
+[ext_resource type="Script" uid="uid://dxa5qc0i7wa3s" path="res://scenes/card_ui/card_select_state.gd" id="14_yxhu4"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_25o76"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yxhu4"]
 shader = ExtResource("4_opj8w")
 shader_parameter/progress = 0.0
 shader_parameter/outline_width = 3.0
@@ -44,7 +45,7 @@ offset_bottom = 30.0
 mouse_filter = 2
 
 [node name="CardOutlineProgress" type="Panel" parent="CardVisuals"]
-material = SubResource("ShaderMaterial_25o76")
+material = SubResource("ShaderMaterial_yxhu4")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -93,6 +94,10 @@ state = 5
 [node name="CardAimingState" type="Node" parent="CardStateMachine"]
 script = ExtResource("8_ew01p")
 state = 4
+
+[node name="CardSelectState" type="Node" parent="CardStateMachine"]
+script = ExtResource("14_yxhu4")
+state = 6
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

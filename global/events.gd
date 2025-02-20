@@ -9,6 +9,13 @@ signal card_played(card: Card)
 signal card_tooltip_requested(card: Card)
 signal tooltip_hide_requested
 
+# BattleUI-related events
+signal battle_ui_mask_show_requested
+signal battle_ui_mask_hide_requested
+signal select_hand_requested(select_count: int, reason: String, select_optional: bool)
+signal hand_card_selected(card_ui: CardUI)
+signal hand_cards_select_confirmed(cards: Array[CardUI])
+
 # Aim-related events
 signal projectile_aim_started(speed: float, gravity: float, max_rebound: int)
 signal projectile_aim_ended
@@ -31,6 +38,7 @@ signal enemy_died(enemy: Enemy)
 signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
+
 
 # Map-related events
 signal map_exited(room: Room)

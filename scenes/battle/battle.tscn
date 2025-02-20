@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cahno8aso5net"]
+[gd_scene load_steps=26 format=3 uid="uid://cahno8aso5net"]
 
 [ext_resource type="Script" uid="uid://g067e57qj7kx" path="res://scenes/battle/battle.gd" id="1_4s751"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="1_ybkl6"]
@@ -15,11 +15,13 @@
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]
+[ext_resource type="Script" uid="uid://dbj3b53njd427" path="res://scenes/battle/battle_ui_mask.gd" id="13_156m4"]
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="13_523u4"]
 [ext_resource type="Script" uid="uid://bxx6kgg3pxjl7" path="res://scenes/ui/red_flash.gd" id="15_qvh8t"]
 [ext_resource type="PackedScene" uid="uid://dx377oa3pkut" path="res://scenes/ui/card_pile_opener.tscn" id="17_djv03"]
 [ext_resource type="PackedScene" uid="uid://dfig8d63ggof1" path="res://scenes/ui/battle_over_panel.tscn" id="17_xrby7"]
 [ext_resource type="Texture2D" uid="uid://c7c8cgkuro8b3" path="res://art/discard.png" id="18_g47ei"]
+[ext_resource type="PackedScene" uid="uid://b7mngqgrt5ffg" path="res://scenes/hand_card_selector/hand_card_selector.tscn" id="20_pyfix"]
 [ext_resource type="PackedScene" uid="uid://d2jq2r5hb1ajk" path="res://scenes/ui/card_pile_view.tscn" id="21_rnul2"]
 [ext_resource type="PackedScene" uid="uid://c3fu2yk5vm3qb" path="res://scenes/ui/status_view.tscn" id="22_kfjwu"]
 
@@ -76,6 +78,16 @@ hand = NodePath("../BattleUI/Hand")
 
 [node name="BattleUI" type="CanvasLayer" parent="." groups=["ui_layer"]]
 script = ExtResource("7_18vit")
+
+[node name="BattleUIMask" type="ColorRect" parent="BattleUI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65098)
+script = ExtResource("13_156m4")
 
 [node name="Hand" type="HBoxContainer" parent="BattleUI" node_paths=PackedStringArray("player")]
 anchors_preset = 7
@@ -162,6 +174,10 @@ offset_right = 7.0
 offset_bottom = 18.0
 text = "99"
 horizontal_alignment = 1
+
+[node name="HandCardSelector" parent="BattleUI" node_paths=PackedStringArray("hand") instance=ExtResource("20_pyfix")]
+visible = false
+hand = NodePath("../Hand")
 
 [node name="RedFlash" type="CanvasLayer" parent="."]
 layer = 2

@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7mngqgrt5ffg"]
+
+[ext_resource type="Script" uid="uid://cu4j017hq73pu" path="res://scenes/hand_card_selector/hand_card_selector.gd" id="1_acmc8"]
+
+[node name="HandCardSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_acmc8")
+
+[node name="SelectReason" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.0
+offset_top = 22.0
+offset_right = 37.0
+offset_bottom = 28.0
+grow_horizontal = 2
+text = "select a card to ..."
+
+[node name="Cards" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -34.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 6.0
+offset_right = 17.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "confirm"
+
+[connection signal="child_order_changed" from="Cards" to="." method="_on_cards_child_order_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

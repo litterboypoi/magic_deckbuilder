@@ -14,6 +14,11 @@ func enter() -> void:
 	card_ui.reparent_requested.emit(card_ui)
 	card_ui.pivot_offset = Vector2.ZERO
 	Events.tooltip_hide_requested.emit()
+	Events.select_hand_requested.connect(_transtion_to_select)
+
+
+func exit() -> void:
+	Events.select_hand_requested.disconnect(_transtion_to_select)
 
 
 func on_gui_input(event: InputEvent) -> void:
@@ -43,3 +48,7 @@ func on_mouse_exited() -> void:
 
 	card_ui.card_visuals.panel.set("theme_override_styles/panel", card_ui.BASE_STYLEBOX)
 	Events.tooltip_hide_requested.emit()
+
+
+func _transtion_to_select(_select_count: int, _reason: String, _select_optional: bool):
+	transition_requested.emit(self, CardState.State.EX_SELECT)
