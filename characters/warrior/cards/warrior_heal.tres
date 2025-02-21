@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dt0os5phg4p8s"]
+
+[ext_resource type="Texture2D" uid="uid://cn2c1psh561cc" path="res://art/tile_0127.png" id="1_mdfnr"]
+[ext_resource type="Script" path="res://characters/warrior/cards/warrior_heal.gd" id="2_tiiea"]
+
+[resource]
+script = ExtResource("2_tiiea")
+id = "warrior_heal"
+type = 1
+rarity = 0
+target = 0
+cost = 1
+spell_time = 0.0
+delay_time = 0.0
+exhausts = true
+icon = ExtResource("1_mdfnr")
+tooltip_text = "heal 3 health"

@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Deck Builder Tutorial"
 config/tags=PackedStringArray("gamelab")
-run/main_scene="uid://cfnlpvfc1d862"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="res://scenes/run/run.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.png"
 
 [autoload]

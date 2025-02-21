@@ -69,16 +69,44 @@ func discard_cards() -> void:
 		Events.player_hand_discarded.emit()
 		return
 
-	var tween := create_tween()
-	for card_ui: CardUI in hand.get_children():
-		tween.tween_callback(character.discard.add_card.bind(card_ui.card))
-		tween.tween_callback(hand.discard_card.bind(card_ui))
-		tween.tween_interval(HAND_DISCARD_INTERVAL)
+	var cards: Array[CardUI] = []
+	cards.assign(hand.get_children())
+	var tween = _impl_discard_cards(cards)
 	
 	tween.finished.connect(
 		func():
 			Events.player_hand_discarded.emit()
 	)
+
+func _impl_discard_cards(cards: Array[CardUI]) -> Tween:
+	var tween := create_tween()
+	for card_ui: CardUI in cards:
+		tween.tween_callback(character.discard.add_card.bind(card_ui.card))
+		tween.tween_callback(hand.discard_card.bind(card_ui))
+		tween.tween_interval(HAND_DISCARD_INTERVAL)
+	
+	return tween
+
+
+func select_discard_cards(amount: int, optional: bool) -> void:
+	Events.select_hand_requested.emit(amount, "exhaust", optional)
+	Events.hand_cards_select_confirmed.connect(
+		_impl_discard_cards
+		, ConnectFlags.CONNECT_ONE_SHOT
+	)
+
+
+func select_exhaust_cards(amount: int, optional: bool) -> void:
+	Events.select_hand_requested.emit(amount, "exhaust", optional)
+	Events.hand_cards_select_confirmed.connect(
+		_on_exhaust_hand_cards_select_confirmed
+		, ConnectFlags.CONNECT_ONE_SHOT
+	)
+
+
+func _on_exhaust_hand_cards_select_confirmed(cards: Array[CardUI]):
+	for card in cards:
+		card.queue_free()
 
 
 func reshuffle_deck_from_discard() -> void:

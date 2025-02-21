@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://sbkc4o401k4l" path="res://characters/warrior/warrior.tres" id="4_fwb8a"]
 [ext_resource type="Resource" uid="uid://bnmpwl3k8qb8n" path="res://enemies/crab/crab_enemy.tres" id="5_5flmk"]
 [ext_resource type="Script" uid="uid://b5tmd7fd1o6j3" path="res://scenes/ui/battle_ui.gd" id="7_18vit"]
-[ext_resource type="Script" uid="uid://dl1yosajvpcd7" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
+[ext_resource type="Script" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]

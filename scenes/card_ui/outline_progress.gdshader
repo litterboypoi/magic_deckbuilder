@@ -16,13 +16,13 @@ float border(vec2 uv, float border_width_px, vec2 texture_size)
 
 void fragment() {
 	float is_border = border(UV, outline_width, node_size);
-	
+
 	if (is_border != 0.0) {
 		COLOR = vec4(0.0);
 	} else {
 	    vec2 delta = UV - vec2(0.5, 0.5);
 		float angle = atan(delta.y, delta.x);
-		
+
 		// 将起始点从 3 点钟方向（0 弧度）移动到 12 点钟方向（π/2 弧度）
 		angle = angle - 1.570795;
 		// 将角度范围从 [-3π/2, π/2] 转换为 [-π, π]
