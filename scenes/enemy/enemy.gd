@@ -15,6 +15,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 
 var enemy_action_picker: EnemyActionPicker
 var current_action: EnemyAction : set = set_current_action
+var current_action_perform_turn: int = 0
 
 
 func _ready() -> void:

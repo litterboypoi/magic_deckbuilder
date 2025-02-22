@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dasvnotrby3jh" path="res://custom_resources/attack_card.gd" id="1_pa8kg"]
 [ext_resource type="Texture2D" uid="uid://dhmtctwb5ymhc" path="res://art/gold.png" id="2_7kfty"]
-[ext_resource type="Script" uid="uid://cluqtvnuwluci" path="res://characters/warrior/cards/test_shaopai.gd" id="2_hdt40"]
+[ext_resource type="Script" path="res://characters/warrior/cards/test_shaopai.gd" id="2_hdt40"]
 
 [resource]
 script = ExtResource("2_hdt40")

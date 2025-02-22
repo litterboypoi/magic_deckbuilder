@@ -28,16 +28,23 @@ signal player_hand_discarded
 signal player_turn_ended
 signal player_hit
 signal player_died
+signal player_turn_will_started
+signal player_rest_requested
+# 玩家可以打牌、休息
+signal player_action_enable_requested
 
 # Enemy-related events
+signal enemy_turn_start_requested
 signal enemy_action_completed(enemy: Enemy)
 signal enemy_turn_ended
 signal enemy_died(enemy: Enemy)
+signal update_enemy_intent_requested
 
 # Battle-related events
 signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
+signal cost_turn_card_released(card_ui: CardUI)
 
 
 # Map-related events

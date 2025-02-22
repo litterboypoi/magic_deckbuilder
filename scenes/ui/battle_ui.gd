@@ -13,7 +13,7 @@ extends CanvasLayer
 
 
 func _ready() -> void:
-	Events.player_hand_drawn.connect(_on_player_hand_drawn)
+	Events.player_action_enable_requested.connect(_on_player_action_enable_requested)
 	end_turn_button.pressed.connect(_on_end_turn_button_pressed)
 	draw_pile_button.pressed.connect(draw_pile_view.show_current_view.bind("Draw Pile", true))
 	discard_pile_button.pressed.connect(discard_pile_view.show_current_view.bind("Discard Pile"))
@@ -32,10 +32,10 @@ func _set_char_stats(value: CharacterStats) -> void:
 	hand.char_stats = char_stats
 
 
-func _on_player_hand_drawn() -> void:
+func _on_player_action_enable_requested() -> void:
 	end_turn_button.disabled = false
 
 
 func _on_end_turn_button_pressed() -> void:
 	end_turn_button.disabled = true
-	Events.player_turn_ended.emit()
+	Events.player_rest_requested.emit()

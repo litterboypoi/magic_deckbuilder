@@ -58,6 +58,14 @@ func spell_card(delta_time: float):
 	if card_outline_progress.progress == 1:
 		spell_finished.emit()
 
+
+func pre_play() -> void:
+	if card.cost_turn > 0:
+		Events.cost_turn_card_released.emit(self)
+	else:
+		play()
+
+
 func play() -> void:
 	if not card:
 		return

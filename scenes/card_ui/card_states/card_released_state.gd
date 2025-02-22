@@ -4,7 +4,7 @@ extends CardState
 func enter() -> void:
 	if card_ui.card.is_attack_card():
 		Events.tooltip_hide_requested.emit()
-		card_ui.play()
+		card_ui.pre_play()
 		return
 	if card_ui.targets.is_empty():
 		return
@@ -16,7 +16,7 @@ func enter() -> void:
 		return
 		
 	Events.tooltip_hide_requested.emit()
-	card_ui.play()
+	card_ui.pre_play()
 
 
 func post_enter() -> void:

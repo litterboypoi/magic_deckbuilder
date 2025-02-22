@@ -17,6 +17,7 @@ const RARITY_COLORS := {
 @export var rarity: Rarity
 @export var target: Target
 @export var cost: int
+@export var cost_turn: int
 @export var spell_time: float
 @export var delay_time: float = 0
 @export var exhausts: bool = false
