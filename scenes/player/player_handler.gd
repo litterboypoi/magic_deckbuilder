@@ -22,8 +22,20 @@ var is_rest_this_turn: bool = false
 var is_rest_pre_turn: bool = false
 var is_battle_start_turn: bool = false
 
-var playing_cost_trun_card: CardUI
-var acc_turn_of_playing_card: int = 0
+var playing_cost_trun_card: CardUI : set = set_playing_cost_trun_card
+var acc_turn_of_playing_card: int = 0 : set = set_acc_turn_of_playing_card
+
+
+func set_acc_turn_of_playing_card(value: int) -> void:
+	acc_turn_of_playing_card = value
+	var max_turn = 0 if not playing_cost_trun_card else playing_cost_trun_card.card.cost_turn
+	player.action_progress.update_progress(acc_turn_of_playing_card, max_turn)
+
+
+func set_playing_cost_trun_card(value: CardUI) -> void:
+	playing_cost_trun_card = value
+	var max_turn = 0 if not playing_cost_trun_card else playing_cost_trun_card.card.cost_turn
+	player.action_progress.update_progress(acc_turn_of_playing_card, max_turn)
 
 
 func _ready() -> void:

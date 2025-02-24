@@ -1,6 +1,10 @@
 class_name ActionProgress
 extends HBoxContainer
 
+#
+#func _ready() -> void:
+	#update_progress(1, 3)
+
 
 func update_progress(current: int, max_turn: int):
 	for child in get_children():

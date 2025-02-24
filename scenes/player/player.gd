@@ -10,7 +10,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var transmitter: Transmitter = $Transmitter
-
+@onready var action_progress: ActionProgress = $ActionProgress
 
 func _ready() -> void:
 	status_handler.status_owner = self
