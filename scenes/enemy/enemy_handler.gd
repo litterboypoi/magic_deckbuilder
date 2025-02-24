@@ -7,7 +7,8 @@ var acting_enemies: Array[Enemy] = []
 func _ready() -> void:
 	Events.enemy_died.connect(_on_enemy_died)
 	Events.enemy_action_completed.connect(_on_enemy_action_completed)
-	Events.update_enemy_intent_requested.connect(_on_update_enemy_intent_requested)
+	Events.enemy_action_skip.connect(_on_enemy_action_skip)
+	Events.update_enemy_action_requested.connect(_on_update_enemy_action_requested)
 
 
 func setup_enemies(battle_stats: BattleStats) -> void:
@@ -70,9 +71,14 @@ func _on_enemy_died(enemy: Enemy) -> void:
 
 
 func _on_enemy_action_completed(enemy: Enemy) -> void:
+	enemy.current_action = null
 	enemy.status_handler.apply_statuses_by_type(Status.Type.END_OF_TURN)
 
 
-func _on_update_enemy_intent_requested() -> void:
+func _on_enemy_action_skip(enemy: Enemy) -> void:
+	enemy.status_handler.apply_statuses_by_type(Status.Type.END_OF_TURN)
+
+
+func _on_update_enemy_action_requested() -> void:
 	for enemy: Enemy in get_children():
-		enemy.update_intent()
+		enemy.update_action()

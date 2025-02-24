@@ -10,8 +10,8 @@ const outline_width = 2
 
 func _ready() -> void:
 	await get_parent().ready
-	size = get_parent().size + Vector2(outline_width * 2, outline_width * 2)
-	position = -Vector2(outline_width, outline_width)
+	set_deferred("size", get_parent().size + Vector2(outline_width * 2, outline_width * 2))
+	set_deferred("position", -Vector2(outline_width, outline_width))
 	material = material.duplicate()
 
 # 设置进度并更新绘制

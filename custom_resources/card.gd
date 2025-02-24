@@ -64,8 +64,8 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 	else:
 		apply_effects(_get_targets(targets), modifiers)
 	
-	apply_effects_v2(player, direction, modifiers)
-	TimeSystem.request_time(delay_time)
+	#apply_effects_v2(player, direction, modifiers)
+	#TimeSystem.request_time(delay_time)
 
 
 func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:

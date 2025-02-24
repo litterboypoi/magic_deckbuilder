@@ -26,6 +26,7 @@ var playable := true : set = _set_playable
 var disabled := true
 var aim_direction: Vector2 = Vector2.ZERO
 var current_spell_time: float = 0
+var saved_targets_on_preplay: Array[Node] = []
 
 
 func _ready() -> void:
@@ -60,6 +61,7 @@ func spell_card(delta_time: float):
 
 
 func pre_play() -> void:
+	saved_targets_on_preplay = targets.duplicate()
 	if card.cost_turn > 0:
 		Events.cost_turn_card_released.emit(self)
 	else:
@@ -70,7 +72,10 @@ func play() -> void:
 	if not card:
 		return
 	var player = get_tree().get_first_node_in_group("player")
-	card.play(targets, char_stats, player_modifiers, player, aim_direction)
+	# FIX_DONE
+	# FIXME 多回合卡牌 targets 为空。原因是卡牌改成多回合打出后 drop_point_detector的逻辑还生效
+	# 导致pre_play那回合的targets在另一回合经过鼠标移出detector区域后被消除了
+	card.play(saved_targets_on_preplay, char_stats, player_modifiers, player, aim_direction)
 	queue_free()
 
 

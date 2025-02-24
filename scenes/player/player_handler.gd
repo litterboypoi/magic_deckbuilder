@@ -51,11 +51,14 @@ func start_turn() -> void:
 	if is_rest_pre_turn:
 		character.reset_mana()
 	
+	Events.update_enemy_action_requested.emit()
 	
 	relics.activate_relics_by_type(Relic.Type.START_OF_TURN)
 
 
 func end_turn() -> void:
+	# 到这一步也不能变更敌人action了。
+	Events.player_cant_action.emit()
 	is_battle_start_turn = false
 	hand.disable_hand()
 	relics.activate_relics_by_type(Relic.Type.END_OF_TURN)
@@ -67,7 +70,6 @@ func rest() -> void:
 
 
 func do_start_turn_ready():
-	Events.update_enemy_intent_requested.emit()
 	if playing_cost_trun_card:
 		move_on_playing_card()
 	else:
@@ -84,6 +86,8 @@ func do_end_turn_will_done():
 
 
 func move_on_playing_card():
+	# 到这一步就不能变更敌人action了。
+	Events.player_cant_action.emit()
 	acc_turn_of_playing_card +=1
 	if acc_turn_of_playing_card == playing_cost_trun_card.card.cost_turn:
 		acc_turn_of_playing_card = 0

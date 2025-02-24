@@ -11,6 +11,7 @@ type = 0
 rarity = 0
 target = 1
 cost = 1
+cost_turn = 0
 spell_time = 2.0
 delay_time = 0.5
 exhausts = false

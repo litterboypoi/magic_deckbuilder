@@ -12,14 +12,17 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var intent_ui: IntentUI = $IntentUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
+@onready var action_progress: ActionProgress = $ActionProgress
 
 var enemy_action_picker: EnemyActionPicker
 var current_action: EnemyAction : set = set_current_action
-var current_action_perform_turn: int = 0
+var current_action_performed_turn: int = 0 : set = set_current_action_performed_turn
+var is_action_can_change_by_stats_change: bool = false
 
 
 func _ready() -> void:
 	status_handler.status_owner = self
+	Events.player_cant_action.connect(_on_player_cant_action)
 
 
 func set_current_action(value: EnemyAction) -> void:
@@ -32,9 +35,16 @@ func set_enemy_stats(value: EnemyStats) -> void:
 	
 	if not stats.stats_changed.is_connected(update_stats):
 		stats.stats_changed.connect(update_stats)
-		stats.stats_changed.connect(update_action)
+		# FIXME, 只能在player turn响应stats_changed尝试更改action的逻辑，否则游戏的可预测性会降低。
+		stats.stats_changed.connect(update_action_on_stats_change)
 	
 	update_enemy()
+
+
+func set_current_action_performed_turn(value: int) -> void:
+	current_action_performed_turn = value
+	if current_action:
+		action_progress.update_progress(current_action_performed_turn, current_action.cost_turn)
 
 
 func setup_ai() -> void:
@@ -52,16 +62,29 @@ func update_stats() -> void:
 
 
 func update_action() -> void:
-	if not enemy_action_picker:
+	# set true in here because on player turn start, enemy_handler will call this
+	is_action_can_change_by_stats_change = true
+	if current_action:
+		current_action_performed_turn += 1
+	else:
+		if not enemy_action_picker:
+			return
+		
+		if not current_action:
+			current_action_performed_turn = 1
+			current_action = enemy_action_picker.get_action()
+			return
+
+
+func update_action_on_stats_change() -> void:
+	# 玩家操作期间才能改变意图
+	if not is_action_can_change_by_stats_change:
 		return
-	
-	if not current_action:
-		current_action = enemy_action_picker.get_action()
-		return
-	
 	var new_conditional_action := enemy_action_picker.get_first_conditional_action()
 	if new_conditional_action and current_action != new_conditional_action:
+		current_action_performed_turn = 1
 		current_action = new_conditional_action
+		return
 
 
 func update_enemy() -> void:
@@ -80,15 +103,23 @@ func update_intent() -> void:
 	if current_action:
 		current_action.update_intent_text()
 		intent_ui.update_intent(current_action.intent)
+		action_progress.update_progress(current_action_performed_turn, current_action.cost_turn)
+	else:
+		action_progress.hide()
+		intent_ui.hide()
 
 
 func do_turn() -> void:
+	# TODO we don't remove block on turn start any more
 	stats.block = 0
 	
 	if not current_action:
-		return
-	
-	current_action.perform_action()
+		Events.enemy_action_skip.emit(self)
+	elif current_action_performed_turn >= current_action.cost_turn:
+		current_action.perform_action()
+	else:
+		# dont do any thing
+		Events.enemy_action_skip.emit(self)
 
 
 func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
@@ -119,3 +150,7 @@ func _on_area_entered(_area: Area2D) -> void:
 
 func _on_area_exited(_area: Area2D) -> void:
 	arrow.hide()
+
+
+func _on_player_cant_action() -> void:
+	is_action_can_change_by_stats_change = false

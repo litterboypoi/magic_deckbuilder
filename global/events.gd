@@ -32,13 +32,16 @@ signal player_turn_will_started
 signal player_rest_requested
 # 玩家可以打牌、休息
 signal player_action_enable_requested
+# 玩家回合内开始不能操作的时机
+signal player_cant_action
 
 # Enemy-related events
 signal enemy_turn_start_requested
 signal enemy_action_completed(enemy: Enemy)
+signal enemy_action_skip(enemy: Enemy)
 signal enemy_turn_ended
 signal enemy_died(enemy: Enemy)
-signal update_enemy_intent_requested
+signal update_enemy_action_requested
 
 # Battle-related events
 signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
