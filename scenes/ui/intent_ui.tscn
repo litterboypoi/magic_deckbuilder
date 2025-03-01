@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6p08ajglydq8"]
 
-[ext_resource type="Script" path="res://scenes/ui/intent_ui.gd" id="1_aarbb"]
+[ext_resource type="Script" uid="uid://bqidel1kiupy" path="res://scenes/ui/intent_ui.gd" id="1_aarbb"]
 [ext_resource type="Texture2D" uid="uid://bq4im540nk025" path="res://art/tile_0106.png" id="1_giyx2"]
 
 [node name="IntentUI" type="HBoxContainer"]
