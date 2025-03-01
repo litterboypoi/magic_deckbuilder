@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cssdkng4pwt75"]
+
+[ext_resource type="Texture2D" uid="uid://bk7bvmf80narp" path="res://art_aseprite/time_progress_bar.png" id="1_xy4sd"]
+
+[node name="TimeUnitUI" type="TextureProgressBar"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -156.0
+offset_bottom = -128.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 5
+stretch_margin_right = 5
+stretch_margin_bottom = 5
+texture_under = ExtResource("1_xy4sd")
