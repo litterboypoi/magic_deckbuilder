@@ -60,7 +60,7 @@ func start_turn() -> void:
 	
 	is_rest_pre_turn = is_rest_this_turn
 	is_rest_this_turn = false
-	if is_rest_pre_turn:
+	if is_rest_pre_turn or is_battle_start_turn:
 		character.reset_mana()
 	
 	Events.update_enemy_action_requested.emit()
