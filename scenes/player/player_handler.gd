@@ -18,9 +18,19 @@ const HAND_DISCARD_INTERVAL := 0.25
 
 var character: CharacterStats
 
+var current_action: Action
+var is_resting: bool = false
+
 
 func _ready() -> void:
 	Events.card_played.connect(_on_card_played)
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("rest"):
+		_enter_rest()
+	elif event.is_action_released("rest"):
+		_exit_rest()
 
 
 func start_battle(char_stats: CharacterStats) -> void:
@@ -140,3 +150,53 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			player.status_handler.apply_statuses_by_type(Status.Type.START_OF_TURN)
 		Relic.Type.END_OF_TURN:
 			player.status_handler.apply_statuses_by_type(Status.Type.END_OF_TURN)
+
+
+## new logic of real time
+func start_action(new_action: Action):
+	if is_resting:
+		return
+	if current_action:
+		if new_action.immediately:
+			_exit_action(current_action)
+			_enter_action(new_action)
+		else:
+			return
+	else:
+		_enter_action(new_action)
+	
+
+func _exit_action(action: Action):
+	action.exit_requested.disconnect(_exit_action)
+	action.exit()
+	current_action = null
+	TimeSystem.time_frozen()
+	
+
+func _enter_action(action: Action):
+	current_action = action
+	current_action.exit_requested.connect(_exit_action)
+	current_action.enter()
+	
+	if current_action.need_time != 0:
+		TimeSystem.time_flow()
+
+
+func _enter_rest():
+	if current_action:
+		return
+	is_resting = true
+	TimeSystem.tick.connect(_rest_tick)
+	TimeSystem.time_flow()
+
+
+func _exit_rest():
+	if is_resting:
+		is_resting = false
+		TimeSystem.time_frozen()
+		TimeSystem.tick.disconnect(_rest_tick)
+
+
+func _rest_tick(delta: float):
+	var RECOVER_PER_SECOND = 3
+	player.stats.mana += delta * RECOVER_PER_SECOND

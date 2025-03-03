@@ -13,13 +13,14 @@ extends Stats
 @export var max_mana: int
 @export var starting_relic: Relic
 
-var mana: int : set = set_mana
+var mana: float : set = set_mana
 var deck: CardPile
 var discard: CardPile
 var draw_pile: CardPile
 
 
-func set_mana(value: int) -> void:
+func set_mana(value: float) -> void:
+	value = clamp(value, 0, max_mana)
 	mana = value
 	stats_changed.emit()
 
