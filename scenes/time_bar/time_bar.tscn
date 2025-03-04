@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://2gxwglta5b7r" path="res://scenes/time_bar/time_bar_spliter.tscn" id="6_3ikd7"]
 
 [node name="TimeBar" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

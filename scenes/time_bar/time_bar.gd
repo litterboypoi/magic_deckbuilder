@@ -20,10 +20,14 @@ var anchor: Vector2
 
 
 func _ready() -> void:
-	anchor = position + Vector2(size.x / 2, 0)
+	anchor = position + Vector2(need_progress_bar.size.x / 2, 0) * scale
 
 
 func set_time_bar(current: float, need: float):
+	if need == 0:
+		hide()
+	else:
+		show()
 	current = clamp(current, 0, need)
 	var ceil_need = ceil(need)
 	if need != pre_need:
@@ -33,7 +37,7 @@ func set_time_bar(current: float, need: float):
 		need_progress_bar.value = (need / ceil_need) * 100
 		actual_progress_bar.size = Vector2(ceil_need * WIDTH_PER_UNIT, 16)
 		
-		position = anchor - Vector2(need_progress_bar.size.x / 2, 0)
+		position = anchor - Vector2(need_progress_bar.size.x / 2, 0) * scale
 		
 		for i in range(max(0, ceil_need - 1)):
 			var spliter = TIME_BAR_SPLITER.instantiate()

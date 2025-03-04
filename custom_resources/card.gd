@@ -61,6 +61,7 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 	if not is_single_targeted():
 		_targets = _get_targets(targets)
 	var new_action: Action = action.duplicate()
+	new_action.action_owner = player_handler.player
 	new_action.targets = _targets
 	new_action.modifiers = modifiers
 	

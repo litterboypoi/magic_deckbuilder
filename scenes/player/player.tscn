@@ -3,16 +3,23 @@
 [ext_resource type="Texture2D" uid="uid://cpydvk8mq66o5" path="res://art/tile_0087.png" id="1_0r2oj"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_il1gs"]
 [ext_resource type="PackedScene" uid="uid://ph0oi5od64u5" path="res://scenes/ui/stats_ui.tscn" id="2_wnqqm"]
+[ext_resource type="PackedScene" uid="uid://cssdkng4pwt75" path="res://scenes/time_bar/time_bar.tscn" id="3_x8y1k"]
 [ext_resource type="PackedScene" uid="uid://bwet1kdg2v1di" path="res://scenes/status_handler/status_handler.tscn" id="4_60v6k"]
 [ext_resource type="PackedScene" uid="uid://ctvxie3ni1ik4" path="res://scenes/modifier_handler/modifier_handler.tscn" id="5_v2emp"]
 [ext_resource type="PackedScene" uid="uid://bqefj5q31b84i" path="res://scenes/modifier_handler/modifier.tscn" id="6_jup6q"]
-[ext_resource type="PackedScene" uid="uid://bc1nh453ss1pa" path="res://scenes/transmitter/transmitter.tscn" id="7_0owmy"]
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_il1gs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_0r2oj")
+
+[node name="TimeBar" parent="." instance=ExtResource("3_x8y1k")]
+offset_left = -15.0
+offset_top = -13.0
+offset_right = -15.0
+offset_bottom = -13.0
+scale = Vector2(0.3, 0.3)
 
 [node name="StatsUI" parent="." instance=ExtResource("2_wnqqm")]
 offset_top = 6.0
@@ -34,7 +41,3 @@ type = 1
 
 [node name="CardCostModifier" parent="ModifierHandler" instance=ExtResource("6_jup6q")]
 type = 2
-
-[node name="Transmitter" parent="." instance=ExtResource("7_0owmy")]
-visible = false
-position = Vector2(15, 0)

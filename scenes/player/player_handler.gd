@@ -198,5 +198,5 @@ func _exit_rest():
 
 
 func _rest_tick(delta: float):
-	var RECOVER_PER_SECOND = 3
+	var RECOVER_PER_SECOND: float = 3
 	player.stats.mana += delta * RECOVER_PER_SECOND

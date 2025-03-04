@@ -9,7 +9,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var stats_ui: StatsUI = $StatsUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
-@onready var transmitter: Transmitter = $Transmitter
+@onready var time_bar: TimeBar = $TimeBar
 
 
 func _ready() -> void:
