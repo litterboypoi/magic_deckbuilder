@@ -18,7 +18,7 @@ var charging_time: float = 0
 
 
 func enter() -> void:
-	update_action_intent_progress()
+	update_action_intent()
 	TimeSystem.tick.connect(tick)
 
 
@@ -33,16 +33,27 @@ func excute() -> void:
 
 func tick(delta: float) -> void:
 	charging_time += delta
-	update_action_intent_progress()
+	update_action_intent()
 	if charging_time >= need_time:
 		excute()
 
 
-func update_action_intent_progress():
+func update_action_intent():
 	if action_owner is Player:
 		action_owner.time_bar.set_time_bar(charging_time, need_time)
+	elif action_owner is Enemy:
+		action_owner.update_intent(self)
 	
 
 func hide_action_intent():
 	if action_owner is Player:
 		action_owner.time_bar.hide()
+	elif action_owner is Enemy:
+		action_owner.update_intent(null)
+
+
+func copy() -> Action:
+	var new_action = duplicate()
+	for property in get_property_list():
+		new_action.set(property.name, get(property.name))
+	return new_action

@@ -75,4 +75,4 @@ func _on_enemy_action_completed(enemy: Enemy) -> void:
 
 func _on_player_hand_drawn() -> void:
 	for enemy: Enemy in get_children():
-		enemy.update_intent()
+		enemy.legal_update_intent()

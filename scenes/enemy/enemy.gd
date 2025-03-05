@@ -10,6 +10,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var arrow: Sprite2D = $Arrow
 @onready var stats_ui: StatsUI = $StatsUI
 @onready var intent_ui: IntentUI = $IntentUI
+@onready var time_bar: TimeBar = $TimeBar
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var enemy_action_handler: EnemyActionHandler = $EnemyActionHandler
@@ -24,7 +25,7 @@ func _ready() -> void:
 
 func set_current_action(value: EnemyAction) -> void:
 	current_action = value
-	update_intent()
+	legal_update_intent()
 
 
 func set_enemy_stats(value: EnemyStats) -> void:
@@ -79,10 +80,24 @@ func update_enemy() -> void:
 	update_stats()
 
 
-func update_intent() -> void:
-	if current_action:
-		current_action.update_intent_text()
-		intent_ui.update_intent(current_action.intent)
+func update_intent(action: AIAction):
+	if not action:
+		intent_ui.hide()
+		time_bar.hide()
+		return
+	
+	intent_ui.show()
+	time_bar.show()
+	action.update_intent_text()
+	intent_ui.update_intent(action.intent)
+	time_bar.set_time_bar(action.charging_time, action.need_time)
+
+
+func legal_update_intent() -> void:
+	pass
+	#if current_action:
+		#current_action.update_intent_text()
+		#intent_ui.update_intent(current_action.intent)
 
 
 func do_turn() -> void:

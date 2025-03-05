@@ -16,7 +16,8 @@ func _set_current_action(value: AIAction) -> void:
 		current_action.exit_requested.disconnect(_on_action_exit_requested)
 		current_action.exit()
 	# enter new action
-	current_action = value
+	# 每次都duplicate一份，避免污染ai_acitons的原始数据
+	current_action = value if not value else value.copy()
 	if current_action:
 		current_action.exit_requested.connect(_on_action_exit_requested)
 		current_action.enter()

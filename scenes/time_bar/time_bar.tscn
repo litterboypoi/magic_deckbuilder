@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cssdkng4pwt75"]
+[gd_scene load_steps=6 format=3 uid="uid://cssdkng4pwt75"]
 
 [ext_resource type="Script" path="res://scenes/time_bar/time_bar.gd" id="1_j2clk"]
 [ext_resource type="Texture2D" uid="uid://cdvb3f52lu3ge" path="res://art_aseprite/time_progress_bar_background.png" id="2_hsvmr"]
 [ext_resource type="Texture2D" uid="uid://co6q4ki14avdo" path="res://art_aseprite/time_progress_bar_need.png" id="3_o72sa"]
 [ext_resource type="Texture2D" uid="uid://deyp8godjlmxv" path="res://art_aseprite/time_progress_bar_over.png" id="4_syw88"]
 [ext_resource type="Texture2D" uid="uid://bx1slca5t4bsp" path="res://art_aseprite/time_progress_bar_need_fill.png" id="5_3qhjq"]
-[ext_resource type="PackedScene" uid="uid://2gxwglta5b7r" path="res://scenes/time_bar/time_bar_spliter.tscn" id="6_3ikd7"]
 
 [node name="TimeBar" type="Control"]
 visible = false
@@ -17,6 +16,7 @@ offset_right = -156.0
 offset_bottom = -128.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_j2clk")
 
 [node name="NeedProgressBar" type="TextureProgressBar" parent="."]
@@ -52,10 +52,3 @@ anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 16.0
 metadata/_edit_lock_ = true
-
-[node name="TimeBarSpliter" parent="Spliters" instance=ExtResource("6_3ikd7")]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 0.0
-offset_right = 26.0
-offset_bottom = 10.0
