@@ -55,8 +55,10 @@ func hide_action_intent():
 		action_owner.update_intent(null)
 
 
-func copy() -> Action:
-	var new_action = duplicate()
-	for property in get_property_list():
-		new_action.set(property.name, get(property.name))
-	return new_action
+#func copy() -> Action:
+	#var new_action = duplicate()
+	#for property in get_property_list():
+		#if get(property.name) is Action:
+			#continue
+		#new_action.set(property.name, get(property.name))
+	#return new_action

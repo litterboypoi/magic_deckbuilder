@@ -9,7 +9,10 @@ const outline_width = 2
 
 
 func _ready() -> void:
-	await get_parent().ready
+	call_deferred("init_setup")
+
+
+func init_setup():
 	size = get_parent().size + Vector2(outline_width * 2, outline_width * 2)
 	position = -Vector2(outline_width, outline_width)
 	material = material.duplicate()
