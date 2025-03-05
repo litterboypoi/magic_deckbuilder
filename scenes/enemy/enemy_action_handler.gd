@@ -7,6 +7,7 @@ extends Node
 
 @onready var total_weight := 0.0
 
+var started_flag := false
 var current_action: AIAction : set = _set_current_action
 
 
@@ -14,14 +15,15 @@ func _set_current_action(value: AIAction) -> void:
 	# exit pre action
 	if current_action:
 		current_action.exit()
-		# 由于每次都connect到了新的aciton，所以这里不需要disconnect
-		# current_action.exit_requested.disconnect(_on_action_exit_requested)
+		current_action.exit_requested.disconnect(_on_action_exit_requested)
 	# enter new action
 	# 每次都duplicate一份，避免污染ai_acitons的原始数据
 	current_action = value if not value else value.copy()
 	if current_action:
+		setup_action(current_action)
 		current_action.exit_requested.connect(_on_action_exit_requested)
 		current_action.remove_requested.connect(_on_action_remove_requested)
+		current_action.change_action_requested.connect(_on_change_action_requested)
 		current_action.enter()
 	
 
@@ -32,7 +34,10 @@ func _ready() -> void:
 	ai_actions = copy_ai_actions
 
 func run_ai() -> void:
-	setup_actions()
+	if started_flag:
+		return
+	started_flag = true
+	setup_chances()
 	# NOTE 自身conditional aciton改变stats，会在exit之前触发这里，需要注意
 	# 当然，在exit之前触发这里并不是什么问题，但要避免触发同一个conditional action
 	# 因此只能触发一次的aciton需要在action生效前发出remove_requested
@@ -40,17 +45,18 @@ func run_ai() -> void:
 	next_action()
 
 
-func setup_actions():
-	var player = get_tree().get_first_node_in_group("player")
+func setup_chances():
 	for action in ai_actions:
-		action.action_owner = enemy
-		action.modifiers = modifier_handler
-		action.targets = [player]
-
 		# setup_chances
 		if action.type == AIAction.Type.CHANCE_BASED:
 			total_weight += action.chance_weight
 			action.accumulated_weight = total_weight
+
+
+func setup_action(action: AIAction):
+	action.action_owner = enemy
+	action.modifiers = modifier_handler
+	action.targets = [get_tree().get_first_node_in_group("player")]
 
 
 func next_action():
@@ -98,4 +104,8 @@ func _on_action_exit_requested(_action: Action):
 
 func _on_action_remove_requested(action: AIAction):
 	ai_actions = ai_actions.filter(func(e): return e.id != action.id)
-	setup_actions()
+	setup_chances()
+
+
+func _on_change_action_requested(new_action: Action, _old_action: Action):
+	current_action = new_action as AIAction

@@ -12,7 +12,7 @@ icon = ExtResource("1_lbegd")
 [resource]
 script = ExtResource("1_bx0n4")
 block = 15
-hp_threshold = 6
+hp_threshold = 1
 intent = SubResource("Resource_nc6yu")
 type = 0
 chance_weight = 0.0

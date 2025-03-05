@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CrabRealtimeAttackAction" load_steps=6 format=3 uid="uid://qsuwr76xvpej"]
+
+[ext_resource type="Texture2D" uid="uid://dojlh80rte165" path="res://art/tile_0107.png" id="1_jafkx"]
+[ext_resource type="Script" path="res://enemies/crab/crab_realtime_attack_action.gd" id="1_xoqpn"]
+[ext_resource type="Script" uid="uid://dwryndl5cqp11" path="res://custom_resources/intent.gd" id="2_t1m5q"]
+[ext_resource type="AudioStream" uid="uid://de2ryat1pxq6" path="res://art/enemy_attack.ogg" id="4_43mow"]
+
+[sub_resource type="Resource" id="Resource_ramni"]
+script = ExtResource("2_t1m5q")
+base_text = "12"
+icon = ExtResource("1_jafkx")
+
+[resource]
+script = ExtResource("1_xoqpn")
+base_damage = 12
+intent = SubResource("Resource_ramni")
+type = 1
+chance_weight = 0.0
+id = ""
+need_time = 1.0
+immediately = false
+card_text = ""
+sound = ExtResource("4_43mow")

@@ -32,9 +32,6 @@ func is_single_targeted() -> bool:
 	return target == Target.SINGLE_ENEMY
 
 
-func is_attack_card() -> bool:
-	return type == Type.ATTACK
-
 
 func _get_targets(targets: Array[Node]) -> Array[Node]:
 	if not targets:

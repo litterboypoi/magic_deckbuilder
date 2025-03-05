@@ -2,6 +2,7 @@ class_name Action
 extends Resource
 
 signal exit_requested(action: Action)
+signal change_action_requested(new_action: Action, old_action: Action)
 
 
 @export var id: String
