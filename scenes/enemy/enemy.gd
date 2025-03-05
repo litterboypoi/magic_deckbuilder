@@ -12,6 +12,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var intent_ui: IntentUI = $IntentUI
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
+@onready var enemy_action_handler: EnemyActionHandler = $EnemyActionHandler
 
 var enemy_action_picker: EnemyActionPicker
 var current_action: EnemyAction : set = set_current_action
@@ -37,6 +38,9 @@ func set_enemy_stats(value: EnemyStats) -> void:
 
 
 func setup_ai() -> void:
+	# FIXME 防止被多次调用。
+	enemy_action_handler.run_ai()
+	
 	if enemy_action_picker:
 		enemy_action_picker.queue_free()
 		

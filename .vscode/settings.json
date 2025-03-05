@@ -1,3 +1,10 @@
 {
-    "godotTools.editorPath.godot4": "/Applications/Godot.app"
+    "godotTools.editorPath.godot4": "/Applications/Godot.app",
+    "files.exclude": {
+        "**/*.gd.uid": true,
+        "**/*.import": true,
+        "**/*.tres": true,
+        "**/*.tscn": true
+    },
+    "editor.insertSpaces": false
 }

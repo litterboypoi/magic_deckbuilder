@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d0efyathkfg74"]
+[gd_scene load_steps=13 format=3 uid="uid://d0efyathkfg74"]
 
 [ext_resource type="Texture2D" uid="uid://1u3b3hwqd8yh" path="res://art/tile_0110.png" id="1_exhc0"]
 [ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_ogp3w"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://bwet1kdg2v1di" path="res://scenes/status_handler/status_handler.tscn" id="6_3dhyq"]
 [ext_resource type="PackedScene" uid="uid://ctvxie3ni1ik4" path="res://scenes/modifier_handler/modifier_handler.tscn" id="7_xbm7w"]
 [ext_resource type="PackedScene" uid="uid://bqefj5q31b84i" path="res://scenes/modifier_handler/modifier.tscn" id="8_akusk"]
+[ext_resource type="Script" path="res://scenes/enemy/enemy_action_handler.gd" id="9_n202h"]
+[ext_resource type="Script" path="res://custom_resources/ai_action.gd" id="10_5t4f5"]
+[ext_resource type="Resource" uid="uid://cojx0jvcrmlig" path="res://enemies/crab/crab_realtime_attack_action.tres" id="11_q84ht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3gsft"]
 
@@ -48,6 +51,12 @@ status_owner = NodePath("..")
 
 [node name="DamageTakenModifier" parent="ModifierHandler" instance=ExtResource("8_akusk")]
 type = 1
+
+[node name="EnemyActionHandler" type="Node" parent="." node_paths=PackedStringArray("modifier_handler", "enemy")]
+script = ExtResource("9_n202h")
+ai_actions = Array[ExtResource("10_5t4f5")]([ExtResource("11_q84ht")])
+modifier_handler = NodePath("../ModifierHandler")
+enemy = NodePath("..")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

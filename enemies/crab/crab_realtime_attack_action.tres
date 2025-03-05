@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CrabRealtimeAttackAction" load_steps=3 format=3 uid="uid://cojx0jvcrmlig"]
+
+[ext_resource type="Script" path="res://enemies/crab/crab_realtime_attack_action.gd" id="1_ypbtt"]
+[ext_resource type="AudioStream" uid="uid://de2ryat1pxq6" path="res://art/enemy_attack.ogg" id="2_lp35y"]
+
+[resource]
+script = ExtResource("1_ypbtt")
+sound = ExtResource("2_lp35y")
+base_damage = 6
+type = 1
+chance_weight = 1.0
+need_time = 3.0
+immediately = false
+card_text = ""
