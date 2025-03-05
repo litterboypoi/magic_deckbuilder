@@ -1,6 +1,8 @@
 class_name AIAction
 extends Action
 
+signal remove_requested(action: AIAction)
+
 enum Type {CONDITIONAL, CHANCE_BASED}
 
 @export var intent: Intent

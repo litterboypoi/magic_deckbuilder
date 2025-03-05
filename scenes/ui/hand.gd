@@ -8,6 +8,9 @@ const CARD_UI_SCENE := preload("res://scenes/card_ui/card_ui.tscn")
 
 
 func add_card(card: Card) -> void:
+	if not card:
+		return
+	
 	var new_card_ui := CARD_UI_SCENE.instantiate() as CardUI
 	add_child(new_card_ui)
 	new_card_ui.reparent_requested.connect(_on_card_ui_reparent_requested)

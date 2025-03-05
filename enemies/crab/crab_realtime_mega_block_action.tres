@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CrabRealtimeMegaBlockAction" load_steps=5 format=3 uid="uid://bl50fvy3eu01r"]
+
+[ext_resource type="Script" path="res://enemies/crab/crab_realtime_mega_block_action.gd" id="1_bx0n4"]
+[ext_resource type="Texture2D" uid="uid://bi6pfjs32f820" path="res://art/tile_0101.png" id="1_lbegd"]
+[ext_resource type="Script" uid="uid://dwryndl5cqp11" path="res://custom_resources/intent.gd" id="2_0slkq"]
+
+[sub_resource type="Resource" id="Resource_nc6yu"]
+script = ExtResource("2_0slkq")
+base_text = ""
+icon = ExtResource("1_lbegd")
+
+[resource]
+script = ExtResource("1_bx0n4")
+block = 15
+hp_threshold = 6
+intent = SubResource("Resource_nc6yu")
+type = 0
+chance_weight = 0.0
+id = "crab_realtime_mega_block"
+need_time = 1.0
+immediately = false
+card_text = ""

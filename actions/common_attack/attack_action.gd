@@ -1,7 +1,6 @@
 class_name AttackAction
 extends Action
 
-@export var sound: AudioStream
 @export var base_damage := 6
 
 func excute() -> void:

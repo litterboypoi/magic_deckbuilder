@@ -1,8 +1,6 @@
 class_name CrabRealtimeAttackAction
 extends AIAction
 
-
-@export var sound: AudioStream
 @export var base_damage := 6
 
 func excute() -> void:

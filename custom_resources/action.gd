@@ -4,9 +4,11 @@ extends Resource
 signal exit_requested(action: Action)
 
 
+@export var id: String
 @export var need_time: float
 @export var immediately: bool = false
 @export_multiline var card_text: String
+@export var sound: AudioStream
 
 # must be set when created
 var action_owner: Node

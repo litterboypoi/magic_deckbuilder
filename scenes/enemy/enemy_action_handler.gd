@@ -13,13 +13,15 @@ var current_action: AIAction : set = _set_current_action
 func _set_current_action(value: AIAction) -> void:
 	# exit pre action
 	if current_action:
-		current_action.exit_requested.disconnect(_on_action_exit_requested)
 		current_action.exit()
+		# 由于每次都connect到了新的aciton，所以这里不需要disconnect
+		# current_action.exit_requested.disconnect(_on_action_exit_requested)
 	# enter new action
 	# 每次都duplicate一份，避免污染ai_acitons的原始数据
 	current_action = value if not value else value.copy()
 	if current_action:
 		current_action.exit_requested.connect(_on_action_exit_requested)
+		current_action.remove_requested.connect(_on_action_remove_requested)
 		current_action.enter()
 	
 
@@ -31,6 +33,9 @@ func _ready() -> void:
 
 func run_ai() -> void:
 	setup_actions()
+	# NOTE 自身conditional aciton改变stats，会在exit之前触发这里，需要注意
+	# 当然，在exit之前触发这里并不是什么问题，但要避免触发同一个conditional action
+	# 因此只能触发一次的aciton需要在action生效前发出remove_requested
 	enemy.stats.stats_changed.connect(try_switch_conditional_action)
 	next_action()
 
@@ -89,3 +94,8 @@ func _on_action_exit_requested(_action: Action):
 	current_action = null
 	next_action()
 	
+
+
+func _on_action_remove_requested(action: AIAction):
+	ai_actions = ai_actions.filter(func(e): return e.id != action.id)
+	setup_actions()

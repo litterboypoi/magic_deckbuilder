@@ -1,14 +1,9 @@
-[gd_resource type="Resource" script_class="CardPile" load_steps=9 format=3 uid="uid://dyyfi3rcfxyug"]
+[gd_resource type="Resource" script_class="CardPile" load_steps=4 format=3 uid="uid://dyyfi3rcfxyug"]
 
 [ext_resource type="Script" uid="uid://es0emswwrol6" path="res://custom_resources/card_pile.gd" id="1_ncslu"]
 [ext_resource type="Script" path="res://custom_resources/card.gd" id="1_tnkis"]
-[ext_resource type="Resource" uid="uid://btxc1odh1jmst" path="res://characters/warrior/cards/warrior_axe_attack.tres" id="1_vcw61"]
-[ext_resource type="Resource" uid="uid://d4c8yfl4f4sat" path="res://characters/warrior/cards/warrior_block.tres" id="2_1cndr"]
 [ext_resource type="Resource" uid="uid://n3va254ct6b3" path="res://characters/warrior/cards/warrior_slash.tres" id="2_svnpp"]
-[ext_resource type="Resource" uid="uid://d20gx8xpmgpdi" path="res://characters/warrior/cards/warrior_big_slam.tres" id="4_u4di5"]
-[ext_resource type="Resource" uid="uid://c8g8a5tx1sr2p" path="res://characters/warrior/cards/warrior_true_strength.tres" id="5_ufvqk"]
-[ext_resource type="Resource" uid="uid://dt0os5phg4p8s" path="res://characters/warrior/cards/warrior_heal.tres" id="8_s60lq"]
 
 [resource]
 script = ExtResource("1_ncslu")
-cards = Array[ExtResource("1_tnkis")]([ExtResource("1_vcw61"), ExtResource("2_svnpp"), ExtResource("2_1cndr"), ExtResource("2_1cndr"), ExtResource("5_ufvqk"), ExtResource("4_u4di5"), ExtResource("8_s60lq")])
+cards = Array[ExtResource("1_tnkis")]([ExtResource("2_svnpp"), ExtResource("2_svnpp"), ExtResource("2_svnpp")])

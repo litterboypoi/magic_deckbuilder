@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0efyathkfg74"]
+[gd_scene load_steps=15 format=3 uid="uid://d0efyathkfg74"]
 
 [ext_resource type="Texture2D" uid="uid://1u3b3hwqd8yh" path="res://art/tile_0110.png" id="1_exhc0"]
 [ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_ogp3w"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scenes/enemy/enemy_action_handler.gd" id="9_n202h"]
 [ext_resource type="Script" path="res://custom_resources/ai_action.gd" id="10_5t4f5"]
 [ext_resource type="Resource" uid="uid://cojx0jvcrmlig" path="res://enemies/crab/crab_realtime_attack_action.tres" id="11_q84ht"]
+[ext_resource type="Resource" uid="uid://bl50fvy3eu01r" path="res://enemies/crab/crab_realtime_mega_block_action.tres" id="13_32fuh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3gsft"]
 
@@ -63,7 +64,7 @@ type = 1
 
 [node name="EnemyActionHandler" type="Node" parent="." node_paths=PackedStringArray("modifier_handler", "enemy")]
 script = ExtResource("9_n202h")
-ai_actions = Array[ExtResource("10_5t4f5")]([ExtResource("11_q84ht")])
+ai_actions = Array[ExtResource("10_5t4f5")]([ExtResource("11_q84ht"), ExtResource("13_32fuh")])
 modifier_handler = NodePath("../ModifierHandler")
 enemy = NodePath("..")
 

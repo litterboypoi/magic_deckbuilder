@@ -12,7 +12,6 @@ icon = ExtResource("1_cla6y")
 
 [resource]
 script = ExtResource("1_ypbtt")
-sound = ExtResource("2_lp35y")
 base_damage = 6
 intent = SubResource("Resource_xfifp")
 type = 1
@@ -20,3 +19,4 @@ chance_weight = 1.0
 need_time = 3.0
 immediately = false
 card_text = ""
+sound = ExtResource("2_lp35y")

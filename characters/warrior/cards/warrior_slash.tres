@@ -12,6 +12,7 @@ base_damage = 6
 need_time = 1.0
 immediately = false
 card_text = ""
+sound = ExtResource("3_4dvu8")
 
 [resource]
 script = ExtResource("2_hvnm7")
@@ -19,7 +20,7 @@ id = "warrior_slash"
 type = 0
 rarity = 0
 target = 2
-cost = 2
+cost = 1
 exhausts = false
 action = SubResource("Resource_q04g3")
 icon = ExtResource("1_uhc8e")
