@@ -9,6 +9,7 @@ extends Node
 
 var started_flag := false
 var current_action: AIAction : set = _set_current_action
+var is_current_action_doing_excute := false
 
 
 func _set_current_action(value: AIAction) -> void:
@@ -31,6 +32,7 @@ func _set_current_action(value: AIAction) -> void:
 
 func _ready() -> void:
 	Events.action_excute_permited.connect(_on_action_excute_premited)
+	Events.enemy_died.connect(_on_enemy_died)
 	var copy_ai_actions: Array[AIAction] = []
 	for action in ai_actions:
 		copy_ai_actions.append(action.duplicate())
@@ -121,8 +123,18 @@ func _on_excute_requested(action: Action):
 
 func _on_action_excute_premited(action: Action):
 	if action == current_action:
+		is_current_action_doing_excute = true
 		current_action.do_excute()
 
 
 func _on_excute_finished(action: Action):
+	is_current_action_doing_excute = false
 	Events.action_excute_completed.emit(action)
+
+
+func _on_enemy_died(_enemy: Enemy):
+	if enemy == _enemy:
+		if current_action:
+			if is_current_action_doing_excute:
+				Events.action_excute_completed.emit(current_action)
+			current_action.exit()

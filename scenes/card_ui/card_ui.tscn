@@ -8,11 +8,11 @@
 [ext_resource type="Shader" path="res://scenes/card_ui/outline_progress.gdshader" id="4_opj8w"]
 [ext_resource type="Theme" uid="uid://bkxtjv6rycmv6" path="res://other_themes/panel_outline_border.tres" id="4_qeblu"]
 [ext_resource type="Script" path="res://scenes/card_ui/card_states/card_base_state.gd" id="4_snb4g"]
-[ext_resource type="Script" uid="uid://cudpprejxdrc0" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
+[ext_resource type="Script" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="5_2ks3p"]
 [ext_resource type="Script" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="6_jk8rm"]
 [ext_resource type="Script" path="res://scenes/card_ui/card_states/card_released_state.gd" id="7_k7cbr"]
 [ext_resource type="Script" path="res://scenes/card_ui/card_states/card_aiming_state.gd" id="8_ew01p"]
-[ext_resource type="Script" uid="uid://dxa5qc0i7wa3s" path="res://scenes/card_ui/card_select_state.gd" id="14_yxhu4"]
+[ext_resource type="Script" path="res://scenes/card_ui/card_select_state.gd" id="14_yxhu4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yxhu4"]
 shader = ExtResource("4_opj8w")

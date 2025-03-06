@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_q04g3"]
 script = ExtResource("1_e246k")
-base_damage = 6
+base_damage = 16
 id = ""
 need_time = 1.0
 card_text = ""
@@ -18,11 +18,11 @@ script = ExtResource("2_hvnm7")
 id = "warrior_slash"
 type = 0
 rarity = 0
-target = 2
+target = 1
 cost = 1
 exhausts = false
 action = SubResource("Resource_q04g3")
 icon = ExtResource("1_uhc8e")
 tooltip_text = "[center]Deal [color=\"ff0000\"]%s[/color] damage
-to all enemies.[/center]"
+to one enemies.[/center]"
 sound = ExtResource("3_4dvu8")
