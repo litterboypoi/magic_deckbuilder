@@ -11,14 +11,22 @@ func is_performable() -> bool:
 		return enemy.stats.health <= hp_threshold
 	return false
 
-
-func excute() -> void:
+	
+func do_excute() -> void:
 	remove_requested.emit(self)
-
+	
+	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
+	
 	var block_effect := BlockEffect.new()
 	block_effect.amount = block
 	block_effect.sound = sound
-	block_effect.execute([action_owner])
-
-	exit_requested.emit(self)
 	
+	
+	tween.tween_interval(0.25)
+	
+	tween.finished.connect(
+		func():
+			block_effect.execute([action_owner])
+			excute_finished.emit(self)
+			exit_requested.emit(self)
+	)

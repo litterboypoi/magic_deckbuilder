@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cahno8aso5net"]
+[gd_scene load_steps=27 format=3 uid="uid://cahno8aso5net"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_4s751"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="1_ybkl6"]
@@ -14,8 +14,9 @@
 [ext_resource type="Script" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
+[ext_resource type="Script" path="res://scenes/battle/action_order_manager.gd" id="12_gr6sw"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]
-[ext_resource type="Script" uid="uid://dbj3b53njd427" path="res://scenes/battle/battle_ui_mask.gd" id="13_156m4"]
+[ext_resource type="Script" path="res://scenes/battle/battle_ui_mask.gd" id="13_156m4"]
 [ext_resource type="Theme" uid="uid://c8cqncsqlplyu" path="res://main_theme.tres" id="13_523u4"]
 [ext_resource type="Script" uid="uid://bxx6kgg3pxjl7" path="res://scenes/ui/red_flash.gd" id="15_qvh8t"]
 [ext_resource type="PackedScene" uid="uid://dx377oa3pkut" path="res://scenes/ui/card_pile_opener.tscn" id="17_djv03"]
@@ -75,6 +76,9 @@ stats = ExtResource("4_fwb8a")
 script = ExtResource("8_3di7i")
 player = NodePath("../Player")
 hand = NodePath("../BattleUI/Hand")
+
+[node name="ActionOrderManager" type="Node" parent="."]
+script = ExtResource("12_gr6sw")
 
 [node name="BattleUI" type="CanvasLayer" parent="." groups=["ui_layer"]]
 script = ExtResource("7_18vit")

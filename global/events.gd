@@ -40,6 +40,10 @@ signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
 signal status_tooltip_requested(statuses: Array[Status])
 
+# ActionOrder-related events
+signal action_excute_requested(action: Action)
+signal action_excute_completed(action: Action)
+signal action_excute_permited(action: Action)
 
 # Map-related events
 signal map_exited(room: Room)

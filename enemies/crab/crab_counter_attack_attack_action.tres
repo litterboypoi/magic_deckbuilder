@@ -18,6 +18,5 @@ type = 1
 chance_weight = 0.0
 id = ""
 need_time = 1.0
-immediately = false
 card_text = ""
 sound = ExtResource("4_43mow")

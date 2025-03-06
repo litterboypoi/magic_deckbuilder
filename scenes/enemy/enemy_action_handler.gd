@@ -24,10 +24,13 @@ func _set_current_action(value: AIAction) -> void:
 		current_action.exit_requested.connect(_on_action_exit_requested)
 		current_action.remove_requested.connect(_on_action_remove_requested)
 		current_action.change_action_requested.connect(_on_change_action_requested)
+		current_action.excute_requested.connect(_on_excute_requested)
+		current_action.excute_finished.connect(_on_excute_finished)
 		current_action.enter()
 	
 
 func _ready() -> void:
+	Events.action_excute_permited.connect(_on_action_excute_premited)
 	var copy_ai_actions: Array[AIAction] = []
 	for action in ai_actions:
 		copy_ai_actions.append(action.duplicate())
@@ -109,3 +112,17 @@ func _on_action_remove_requested(action: AIAction):
 
 func _on_change_action_requested(new_action: Action, _old_action: Action):
 	current_action = new_action as AIAction
+
+
+func _on_excute_requested(action: Action):
+	Events.action_excute_requested.emit(action)
+	# TODO player action 期间可能要做一些禁用操作，可能在这里也可能在action_order_manager中做
+
+
+func _on_action_excute_premited(action: Action):
+	if action == current_action:
+		current_action.do_excute()
+
+
+func _on_excute_finished(action: Action):
+	Events.action_excute_completed.emit(action)

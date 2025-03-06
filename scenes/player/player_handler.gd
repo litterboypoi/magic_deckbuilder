@@ -20,17 +20,17 @@ var character: CharacterStats
 
 var current_action: Action
 var is_resting: bool = false
+var rest_time: float = 0
 
 
 func _ready() -> void:
 	Events.card_played.connect(_on_card_played)
+	Events.action_excute_permited.connect(_on_action_excute_premited)
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("rest"):
-		_enter_rest()
-	elif event.is_action_released("rest"):
-		_exit_rest()
+	if event.is_action_released("rest"):
+		rest()
 
 
 func start_battle(char_stats: CharacterStats) -> void:
@@ -157,7 +157,7 @@ func start_action(new_action: Action):
 	if is_resting:
 		return
 	if current_action:
-		if new_action.immediately:
+		if new_action.need_time == 0:
 			_exit_action(current_action)
 			_enter_action(new_action)
 		else:
@@ -170,33 +170,59 @@ func _exit_action(action: Action):
 	action.exit_requested.disconnect(_exit_action)
 	action.exit()
 	current_action = null
+	# FIXME 我不仅仅应该在这ime_forzen
 	TimeSystem.time_frozen()
 	
 
 func _enter_action(action: Action):
 	current_action = action
 	current_action.exit_requested.connect(_exit_action)
+	current_action.excute_requested.connect(_on_excute_requested)
+	current_action.excute_finished.connect(_on_excute_finished)
 	current_action.enter()
 	
 	if current_action.need_time != 0:
 		TimeSystem.time_flow()
 
 
-func _enter_rest():
+
+func _on_excute_requested(action: Action):
+	TimeSystem.time_frozen()
+	Events.action_excute_requested.emit(action)
+	# TODO player action 期间可能要做一些禁用操作，可能在这里也可能在action_order_manager中做
+
+
+func _on_action_excute_premited(action: Action):
+	if action == current_action:
+		current_action.do_excute()
+
+
+func _on_excute_finished(action: Action):
+	Events.action_excute_completed.emit(action)
+
+
+
+func rest():
 	if current_action:
 		return
 	is_resting = true
 	TimeSystem.tick.connect(_rest_tick)
+	discard_cards()
 	TimeSystem.time_flow()
-
 
 func _exit_rest():
 	if is_resting:
 		is_resting = false
+		rest_time = 0
 		TimeSystem.time_frozen()
 		TimeSystem.tick.disconnect(_rest_tick)
+		draw_cards(character.cards_per_turn, true)
 
 
 func _rest_tick(delta: float):
+	var REST_TIME = 1
 	var RECOVER_PER_SECOND: float = 3
 	player.stats.mana += delta * RECOVER_PER_SECOND
+	rest_time += delta
+	if rest_time >= REST_TIME:
+		_exit_rest()

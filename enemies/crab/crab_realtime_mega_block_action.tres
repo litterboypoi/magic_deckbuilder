@@ -18,5 +18,4 @@ type = 0
 chance_weight = 0.0
 id = "crab_realtime_mega_block"
 need_time = 1.0
-immediately = false
 card_text = ""

@@ -3,11 +3,12 @@ extends Resource
 
 signal exit_requested(action: Action)
 signal change_action_requested(new_action: Action, old_action: Action)
+signal excute_requested(action: Action)
+signal excute_finished(action: Action)
 
 
 @export var id: String
 @export var need_time: float
-@export var immediately: bool = false
 @export_multiline var card_text: String
 @export var sound: AudioStream
 
@@ -30,7 +31,13 @@ func exit() -> void:
 	TimeSystem.tick.disconnect(tick)
 
 
+# 默认时间到后调用，一般用来emit excute_requested
 func excute() -> void:
+	excute_requested.emit(self)
+
+
+# 在action_order_manager允许后由上层aciton handler调用
+func do_excute() -> void:
 	pass
 
 
