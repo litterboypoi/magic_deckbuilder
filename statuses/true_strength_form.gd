@@ -1,5 +1,5 @@
 class_name TrueStrengthStatus
-extends Status
+extends LegalStatus
 
 const MUSCLE_STATUS = preload("res://statuses/muscle.tres")
 

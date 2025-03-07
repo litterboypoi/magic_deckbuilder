@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c2xhttrclo1r7" path="res://art/tile_0116.png" id="1_clokn"]
 [ext_resource type="Resource" uid="uid://qsuwr76xvpej" path="res://enemies/crab/crab_counter_attack_attack_action.tres" id="1_id7af"]
-[ext_resource type="Script" uid="uid://dwryndl5cqp11" path="res://custom_resources/intent.gd" id="2_640rr"]
+[ext_resource type="Script" path="res://custom_resources/intent.gd" id="2_640rr"]
 [ext_resource type="Script" path="res://enemies/crab/crab_watch_action.gd" id="3_giekh"]
 
 [sub_resource type="Resource" id="Resource_mwewl"]

@@ -1,5 +1,5 @@
 class_name ExposedStatus
-extends Status
+extends LegalStatus
 
 const MODIFIER := 0.5
 

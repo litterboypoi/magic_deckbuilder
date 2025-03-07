@@ -1,7 +1,7 @@
 class_name StatusHandler
 extends GridContainer
 
-signal statuses_applied(type: Status.Type)
+signal statuses_applied(type: LegalStatus.Type)
 
 const STATUS_APPLY_INTERVAL := 0.25
 const STATUS_UI = preload("res://scenes/status_handler/status_ui.tscn")
@@ -9,12 +9,12 @@ const STATUS_UI = preload("res://scenes/status_handler/status_ui.tscn")
 @export var status_owner: Node2D
 
 
-func apply_statuses_by_type(type: Status.Type) -> void:
-	if type == Status.Type.EVENT_BASED:
+func apply_statuses_by_type(type: LegalStatus.Type) -> void:
+	if type == LegalStatus.Type.EVENT_BASED:
 		return
 		
-	var status_queue: Array[Status] = _get_all_statuses().filter(
-		func(status: Status):
+	var status_queue: Array[LegalStatus] = _get_all_statuses().filter(
+		func(status: LegalStatus):
 			return status.type == type
 	)
 	if status_queue.is_empty():
@@ -22,15 +22,15 @@ func apply_statuses_by_type(type: Status.Type) -> void:
 		return
 	
 	var tween := create_tween()
-	for status: Status in status_queue:
+	for status: LegalStatus in status_queue:
 		tween.tween_callback(status.apply_status.bind(status_owner))
 		tween.tween_interval(STATUS_APPLY_INTERVAL)
 	
 	tween.finished.connect(func(): statuses_applied.emit(type))
 
 
-func add_status(status: Status) -> void:
-	var stackable := status.stack_type != Status.StackType.NONE
+func add_status(status: LegalStatus) -> void:
+	var stackable := status.stack_type != LegalStatus.StackType.NONE
 	
 	# Add it if it's new
 	if not _has_status(status.id):
@@ -46,12 +46,12 @@ func add_status(status: Status) -> void:
 		return
 	
 	# If it's duration-stackable, expand it
-	if status.can_expire and status.stack_type == Status.StackType.DURATION:
+	if status.can_expire and status.stack_type == LegalStatus.StackType.DURATION:
 		_get_status(status.id).duration += status.duration
 		return
 	
 	# If it's stackable, stack it
-	if status.stack_type == Status.StackType.INTENSITY:
+	if status.stack_type == LegalStatus.StackType.INTENSITY:
 		_get_status(status.id).stacks += status.stacks
 	
 
@@ -63,7 +63,7 @@ func _has_status(id: String) -> bool:
 	return false
 
 
-func _get_status(id: String) -> Status:
+func _get_status(id: String) -> LegalStatus:
 	for status_ui: StatusUI in get_children():
 		if status_ui.status.id == id:
 			return status_ui.status
@@ -71,15 +71,15 @@ func _get_status(id: String) -> Status:
 	return null
 
 
-func _get_all_statuses() -> Array[Status]:
-	var statuses: Array[Status] = []
+func _get_all_statuses() -> Array[LegalStatus]:
+	var statuses: Array[LegalStatus] = []
 	for status_ui: StatusUI in get_children():
 		statuses.append(status_ui.status)
 		
 	return statuses
 
 
-func _on_status_applied(status: Status) -> void:
+func _on_status_applied(status: LegalStatus) -> void:
 	if status.can_expire:
 		status.duration -= 1
 

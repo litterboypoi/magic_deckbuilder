@@ -18,8 +18,8 @@ func _input(event: InputEvent) -> void:
 		hide_view()
 
 
-func show_view(statuses: Array[Status]) -> void:
-	for status: Status in statuses:
+func show_view(statuses: Array[LegalStatus]) -> void:
+	for status: LegalStatus in statuses:
 		var new_status_tooltip := STATUS_TOOLTIP.instantiate() as StatusTooltip
 		status_tooltips.add_child(new_status_tooltip)
 		new_status_tooltip.status = status

@@ -136,20 +136,20 @@ func _on_card_played(card: Card) -> void:
 	character.discard.add_card(card)
 
 
-func _on_statuses_applied(type: Status.Type) -> void:
+func _on_statuses_applied(type: LegalStatus.Type) -> void:
 	match type:
-		Status.Type.START_OF_TURN:
+		LegalStatus.Type.START_OF_TURN:
 			draw_cards(character.cards_per_turn, true)
-		Status.Type.END_OF_TURN:
+		LegalStatus.Type.END_OF_TURN:
 			discard_cards()
 
 
 func _on_relics_activated(type: Relic.Type) -> void:
 	match type:
 		Relic.Type.START_OF_TURN:
-			player.status_handler.apply_statuses_by_type(Status.Type.START_OF_TURN)
+			player.status_handler.apply_statuses_by_type(LegalStatus.Type.START_OF_TURN)
 		Relic.Type.END_OF_TURN:
-			player.status_handler.apply_statuses_by_type(Status.Type.END_OF_TURN)
+			player.status_handler.apply_statuses_by_type(LegalStatus.Type.END_OF_TURN)
 
 
 ## new logic of real time

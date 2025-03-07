@@ -1,7 +1,7 @@
-# meta-name: Status
-# meta-description: Create a Status which can be applied to a target.
+# meta-name: LegalStatus
+# meta-description: Create a LegalStatus which can be applied to a target.
 class_name MyAwesomeStatus
-extends Status
+extends LegalStatus
 
 var member_var := 0
 

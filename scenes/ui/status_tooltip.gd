@@ -1,13 +1,13 @@
 class_name StatusTooltip
 extends HBoxContainer
 
-@export var status: Status : set = set_status
+@export var status: LegalStatus : set = set_status
 
 @onready var icon: TextureRect = $Icon
 @onready var label: Label = $Label
 
 
-func set_status(new_status: Status) -> void:
+func set_status(new_status: LegalStatus) -> void:
 	if not is_node_ready():
 		await ready
 	

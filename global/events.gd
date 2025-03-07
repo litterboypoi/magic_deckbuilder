@@ -38,7 +38,7 @@ signal enemy_died(enemy: Enemy)
 # Battle-related events
 signal battle_over_screen_requested(text: String, type: BattleOverPanel.Type)
 signal battle_won
-signal status_tooltip_requested(statuses: Array[Status])
+signal status_tooltip_requested(statuses: Array[LegalStatus])
 
 # ActionOrder-related events
 signal action_excute_requested(action: Action)

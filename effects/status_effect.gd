@@ -1,7 +1,7 @@
 class_name StatusEffect
 extends Effect
 
-var status: Status
+var status: LegalStatus
 
 
 func execute(targets: Array[Node]) -> void:

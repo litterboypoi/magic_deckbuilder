@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://enemies/crab/crab_realtime_mega_block_action.gd" id="1_bx0n4"]
 [ext_resource type="Texture2D" uid="uid://bi6pfjs32f820" path="res://art/tile_0101.png" id="1_lbegd"]
-[ext_resource type="Script" uid="uid://dwryndl5cqp11" path="res://custom_resources/intent.gd" id="2_0slkq"]
+[ext_resource type="Script" path="res://custom_resources/intent.gd" id="2_0slkq"]
 
 [sub_resource type="Resource" id="Resource_nc6yu"]
 script = ExtResource("2_0slkq")
