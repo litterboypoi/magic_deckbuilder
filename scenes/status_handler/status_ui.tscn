@@ -1,13 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://eii7srnfcnt0"]
+[gd_scene load_steps=6 format=3 uid="uid://eii7srnfcnt0"]
 
 [ext_resource type="Texture2D" uid="uid://d0edy7thj8ce6" path="res://art/heart.png" id="1_6oevu"]
 [ext_resource type="Script" path="res://scenes/status_handler/status_ui.gd" id="1_qqi3t"]
+[ext_resource type="Script" path="res://custom_resources/status.gd" id="3_lmse8"]
+[ext_resource type="Texture2D" uid="uid://cnsryks8n838b" path="res://art_aseprite/status_duration_progress.png" id="3_omv8j"]
+
+[sub_resource type="Resource" id="Resource_5xdtk"]
+script = ExtResource("3_lmse8")
+id = "test_status"
+stack_type = 2
+can_expire = true
+duration = 5.0
+stacks = 0
+icon = ExtResource("1_6oevu")
+tooltip = "heart"
 
 [node name="StatusUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_qqi3t")
+status = SubResource("Resource_5xdtk")
 
 [node name="Icon" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(10, 10)
@@ -35,3 +48,12 @@ offset_bottom = 11.0
 text = "99"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DurationProgress" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 10.0
+value = 25.0
+fill_mode = 5
+radial_initial_angle = 270.0
+texture_progress = ExtResource("3_omv8j")
