@@ -2,54 +2,62 @@
 class_name ActionOrderManager
 extends Node
 
-var is_time_flow_this_frame: bool = false
 var is_handle_actions_called_this_frame: bool = false
-var action_queue: Array[Action] = []
-var current_action: Action
+var order_queue: Array[ActionOrder] = []
+var current_order: ActionOrder
 
 
 func _ready() -> void:
-	Events.action_excute_requested.connect(_on_action_excute_requested)
-	Events.action_excute_completed.connect(_on_action_excute_completed)
+	Events.action_order_requested.connect(_on_action_order_requested)
+	# Events.action_excute_requested.connect(_on_action_excute_requested)
+	# Events.action_excute_completed.connect(_on_action_excute_completed)
+
+
+func _on_action_order_requested(action: ActionOrder) -> void:
+	order_queue.append(action)
+	if not is_handle_actions_called_this_frame:
+		is_handle_actions_called_this_frame = true
+		call_deferred("handle_actions")
 
 
 func _on_action_excute_requested(action: Action) -> void:
-	action_queue.append(action)
+	order_queue.append(action)
 	if not is_handle_actions_called_this_frame:
 		is_handle_actions_called_this_frame = true
 		call_deferred("handle_actions")
 
 
 func handle_actions():
-	is_time_flow_this_frame = TimeSystem.is_time_flow
 	order_actions()
-	TimeSystem.time_frozen()
+	TimeSystem.time_frozen_b()
 	handle_next_action()
 	is_handle_actions_called_this_frame = false
 
 
 func handle_next_action():
-	if action_queue.size() == 0:
-		# all actions are finished
-		# recover time flow if it was time flow
-		if is_time_flow_this_frame:
-			TimeSystem.time_flow()
+	if order_queue.size() == 0:
+		TimeSystem.time_flow_b()
 		return
-	current_action = action_queue.pop_front()
-	Events.action_excute_permited.emit(current_action)
+	current_order = order_queue.pop_front()
+	if is_instance_valid(current_order.action_owner):
+		current_order.finished.connect(handle_next_action, ConnectFlags.CONNECT_ONE_SHOT)
+		current_order.action.call(current_order)
+	else:
+		handle_next_action()
+	
 
 
 func order_actions():
-	var ordered_actions: Array[Action] = []
-	for action in action_queue:
+	var ordered_actions: Array[ActionOrder] = []
+	for action in order_queue:
 		if action.action_owner is Player:
 			ordered_actions.append(action)
-	for action in action_queue:
+	for action in order_queue:
 		if action.action_owner is not Player:
 			ordered_actions.append(action)
-	action_queue = ordered_actions
+	order_queue = ordered_actions
 
 
 func _on_action_excute_completed(action: Action) -> void:
-	if action == current_action:
+	if action == current_order:
 		handle_next_action()

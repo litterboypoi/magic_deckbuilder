@@ -31,13 +31,18 @@ func exit() -> void:
 	TimeSystem.tick.disconnect(tick)
 
 
-# 默认时间到后调用，一般用来emit excute_requested
 func excute() -> void:
-	excute_requested.emit(self)
+	var order = ActionOrder.new()
+	order.action_owner = action_owner
+
+	var callable = Callable(self, "do_excute")
+	order.action = callable
+
+	Events.action_order_requested.emit(order)
 
 
 # 在action_order_manager允许后由上层aciton handler调用
-func do_excute() -> void:
+func do_excute(order: ActionOrder) -> void:
 	pass
 
 

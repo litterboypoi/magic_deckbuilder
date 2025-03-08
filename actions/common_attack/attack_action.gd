@@ -4,7 +4,7 @@ extends Action
 @export var base_damage := 6
 
 
-func do_excute() -> void:
+func do_excute(order: ActionOrder) -> void:
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
 	var damage_effect := DamageEffect.new()
 	if modifiers:
@@ -19,6 +19,6 @@ func do_excute() -> void:
 	tween.finished.connect(
 		func():
 			damage_effect.execute(targets)
-			excute_finished.emit(self)
+			order.finished.emit()
 			exit_requested.emit(self)
 	)

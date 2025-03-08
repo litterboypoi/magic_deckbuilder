@@ -7,7 +7,7 @@
 
 [sub_resource type="Resource" id="Resource_q04g3"]
 script = ExtResource("1_e246k")
-base_damage = 16
+base_damage = 9
 id = ""
 need_time = 1.0
 card_text = ""

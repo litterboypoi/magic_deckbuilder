@@ -13,13 +13,13 @@ func exit() -> void:
 	Events.card_played.disconnect(on_card_played)
 
 
-func do_excute() -> void:
+func do_excute(action_order: ActionOrder) -> void:
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
 	tween.tween_interval(0.25)
 	
 	tween.finished.connect(
 		func():
-			excute_finished.emit(self)
+			action_order.finished.emit()
 			exit_requested.emit(self)
 	)
 

@@ -12,7 +12,7 @@ func is_performable() -> bool:
 	return false
 
 	
-func do_excute() -> void:
+func do_excute(action_order: ActionOrder) -> void:
 	remove_requested.emit(self)
 	
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
@@ -27,6 +27,6 @@ func do_excute() -> void:
 	tween.finished.connect(
 		func():
 			block_effect.execute([action_owner])
-			excute_finished.emit(self)
+			action_order.finished.emit()
 			exit_requested.emit(self)
 	)
