@@ -40,5 +40,5 @@ func get_callables() -> Array[Callable]:
 	return []
 
 
-func tick(delta: float) -> void:
+func tick(_delta: float) -> void:
 	pass

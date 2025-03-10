@@ -36,6 +36,8 @@ func change_action(from: AIAction, to: AIAction) -> void:
 
 	if current_action:
 		current_action.exit()
+		current_action.remove_requested.disconnect(_on_action_remove_requested)
+		current_action.change_action_requested.disconnect(change_action)
 	# current_action = to if not to else to.duplicate()
 	current_action = to
 	update_action_intent()

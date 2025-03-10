@@ -8,8 +8,8 @@ var progress: float = 0.0 :set = set_progress
 const outline_width = 2
 
 
-func _ready() -> void:
-	call_deferred("init_setup")
+#func _ready() -> void:
+	#call_deferred("init_setup")
 
 
 func init_setup():
