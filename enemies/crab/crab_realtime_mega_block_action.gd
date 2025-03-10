@@ -12,7 +12,7 @@ func is_performable() -> bool:
 	return false
 
 	
-func do_excute(action_order: ActionOrder) -> void:
+func do_excute(finish_callback: Callable) -> void:
 	remove_requested.emit(self)
 	
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
@@ -27,6 +27,12 @@ func do_excute(action_order: ActionOrder) -> void:
 	tween.finished.connect(
 		func():
 			block_effect.execute([action_owner])
-			action_order.finished.emit()
-			exit_requested.emit(self)
+			finish_callback.call()
 	)
+
+
+func get_callables() -> Array[Callable]:
+	
+	var callable = Callable(self, "do_excute")
+
+	return [callable]

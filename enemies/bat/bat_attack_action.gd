@@ -15,6 +15,7 @@ func perform_action() -> void:
 	damage_effect.amount = damage
 	damage_effect.sound = sound
 	
+	# 如果说要做攻击两次，那应该是创建两个action_order。不能在这里用tween调用两次
 	tween.tween_property(enemy, "global_position", end, 0.4)
 	tween.tween_callback(damage_effect.execute.bind(target_array))
 	tween.tween_interval(0.35)

@@ -42,6 +42,7 @@ signal status_tooltip_requested(statuses: Array[LegalStatus])
 
 # ActionOrder-related events
 signal action_order_requested(action: ActionOrder)
+signal action_order_completed(action: ActionOrder)
 signal action_excute_requested(action: Action)
 signal action_excute_completed(action: Action)
 signal action_excute_permited(action: Action)

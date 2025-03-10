@@ -4,7 +4,7 @@ extends AIAction
 @export var base_damage := 6
 
 
-func do_excute(action_order: ActionOrder) -> void:
+func do_excute(finish_callback: Callable) -> void:
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
 	var damage_effect := DamageEffect.new()
 	if modifiers:
@@ -19,6 +19,12 @@ func do_excute(action_order: ActionOrder) -> void:
 	tween.finished.connect(
 		func():
 			damage_effect.execute(targets)
-			action_order.finished.emit()
-			exit_requested.emit(self)
+			finish_callback.call()
 	)
+
+
+func get_callables() -> Array[Callable]:
+	
+	var callable = Callable(self, "do_excute")
+
+	return [callable]

@@ -80,7 +80,7 @@ func update_enemy() -> void:
 	update_stats()
 
 
-func update_intent(action: AIAction):
+func update_intent(action: AIAction, charging_time: float):
 	if not action:
 		intent_ui.hide()
 		time_bar.hide()
@@ -90,7 +90,7 @@ func update_intent(action: AIAction):
 	time_bar.show()
 	action.update_intent_text()
 	intent_ui.update_intent(action.intent)
-	time_bar.set_time_bar(action.charging_time, action.need_time)
+	time_bar.set_time_bar(charging_time, action.need_time)
 
 
 func legal_update_intent() -> void:
@@ -113,6 +113,8 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 	if stats.health <= 0:
 		return
 	
+	var job_id = AsyncJobRecoder.start_job(self)
+
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
 	var modified_damage := modifier_handler.get_modified_value(damage, which_modifier)
 	
@@ -128,6 +130,8 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 			if stats.health <= 0:
 				Events.enemy_died.emit(self)
 				queue_free()
+			
+			AsyncJobRecoder.finish_job(job_id)
 	)
 
 

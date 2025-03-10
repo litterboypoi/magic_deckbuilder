@@ -6,21 +6,15 @@ var is_handle_actions_called_this_frame: bool = false
 var order_queue: Array[ActionOrder] = []
 var current_order: ActionOrder
 
+var is_wating_for_async_jobs_empty: bool = false
+
 
 func _ready() -> void:
 	Events.action_order_requested.connect(_on_action_order_requested)
-	# Events.action_excute_requested.connect(_on_action_excute_requested)
-	# Events.action_excute_completed.connect(_on_action_excute_completed)
+	AsyncJobRecoder.jobs_emepty.connect(_on_async_jobs_empty)
 
 
 func _on_action_order_requested(action: ActionOrder) -> void:
-	order_queue.append(action)
-	if not is_handle_actions_called_this_frame:
-		is_handle_actions_called_this_frame = true
-		call_deferred("handle_actions")
-
-
-func _on_action_excute_requested(action: Action) -> void:
 	order_queue.append(action)
 	if not is_handle_actions_called_this_frame:
 		is_handle_actions_called_this_frame = true
@@ -39,13 +33,32 @@ func handle_next_action():
 		TimeSystem.time_flow_b()
 		return
 	current_order = order_queue.pop_front()
-	if is_instance_valid(current_order.action_owner):
-		current_order.finished.connect(handle_next_action, ConnectFlags.CONNECT_ONE_SHOT)
-		current_order.action.call(current_order)
-	else:
-		handle_next_action()
+	handle_next_action_callable()
 	
 
+func handle_next_action_callable():
+	if current_order.action_callables.size() == 0:
+		Events.action_order_completed.emit(current_order)
+		handle_next_action()
+		return
+	if is_instance_valid(current_order.action_owner):
+		var callable = current_order.action_callables.pop_front()
+		callable.call(Callable(self, "_on_callable_finished"))
+	else:
+		handle_next_action()
+
+
+func _on_callable_finished() -> void:
+	# TODO 不仅要等callable完成还要等耗时的其他行为完成
+	if AsyncJobRecoder.is_empty():
+		handle_next_action_callable()
+	else:
+		is_wating_for_async_jobs_empty = true
+
+func _on_async_jobs_empty() -> void:
+	if is_wating_for_async_jobs_empty:
+		is_wating_for_async_jobs_empty = false
+		handle_next_action_callable()
 
 func order_actions():
 	var ordered_actions: Array[ActionOrder] = []
@@ -56,8 +69,3 @@ func order_actions():
 		if action.action_owner is not Player:
 			ordered_actions.append(action)
 	order_queue = ordered_actions
-
-
-func _on_action_excute_completed(action: Action) -> void:
-	if action == current_order:
-		handle_next_action()

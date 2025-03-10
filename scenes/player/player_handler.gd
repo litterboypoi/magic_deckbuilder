@@ -21,9 +21,12 @@ var character: CharacterStats
 var current_action: Action
 var is_resting: bool = false
 var rest_time: float = 0
+var charging_time: float = 0
 
 
 func _ready() -> void:
+	TimeSystem.tick.connect(_tick)
+	Events.action_order_completed.connect(_on_action_order_completed)
 	Events.card_played.connect(_on_card_played)
 
 
@@ -155,55 +158,64 @@ func _on_relics_activated(type: Relic.Type) -> void:
 func start_action(new_action: Action):
 	if is_resting:
 		return
+	charging_time = 0
 	if current_action:
-		if new_action.need_time == 0:
-			_exit_action(current_action)
-			_enter_action(new_action)
-		else:
-			return
-	else:
-		_enter_action(new_action)
-	
-
-func _exit_action(action: Action):
-	action.exit_requested.disconnect(_exit_action)
-	action.exit()
-	current_action = null
-	TimeSystem.time_frozen()
-	
-
-func _enter_action(action: Action):
-	current_action = action
-	current_action.exit_requested.connect(_exit_action)
+		end_action()
+	current_action = new_action
 	current_action.enter()
-	
-	if current_action.need_time != 0:
+	update_action_intent()
+	if current_action.need_time == 0:
+		current_action.excute()
+	else:
 		TimeSystem.time_flow()
+	
 
+func end_action():
+	current_action.exit()
+	current_action = null
+	update_action_intent()
+	TimeSystem.time_frozen()
+
+
+func update_action_intent():
+	if current_action:
+		player.time_bar.set_time_bar(charging_time, current_action.need_time)
+	else:
+		player.time_bar.hide()
 
 
 func rest():
 	if current_action:
 		return
 	is_resting = true
-	if not TimeSystem.tick.is_connected(_rest_tick):
-		TimeSystem.tick.connect(_rest_tick)
 	discard_cards()
 	TimeSystem.time_flow()
 
+
 func _exit_rest():
+	is_resting = false
+	rest_time = 0
+	TimeSystem.time_frozen()
+	draw_cards(character.cards_per_turn, true)
+
+
+
+func _on_action_order_completed(action_order: ActionOrder):
+	if action_order.action_owner == player:
+		end_action()
+
+
+func _tick(delta: float) -> void:
 	if is_resting:
-		is_resting = false
-		rest_time = 0
-		TimeSystem.time_frozen()
-		TimeSystem.tick.disconnect(_rest_tick)
-		draw_cards(character.cards_per_turn, true)
+		var REST_TIME = 1
+		var RECOVER_PER_SECOND: float = 3
+		player.stats.mana += delta * RECOVER_PER_SECOND
+		rest_time += delta
+		if rest_time >= REST_TIME:
+			_exit_rest()
 
-
-func _rest_tick(delta: float):
-	var REST_TIME = 1
-	var RECOVER_PER_SECOND: float = 3
-	player.stats.mana += delta * RECOVER_PER_SECOND
-	rest_time += delta
-	if rest_time >= REST_TIME:
-		_exit_rest()
+	if current_action :
+		charging_time += delta
+		update_action_intent()
+		if charging_time >= current_action.need_time:
+			current_action.excute()

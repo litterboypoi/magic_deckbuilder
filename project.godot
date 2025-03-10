@@ -24,6 +24,7 @@ MusicPlayer="*res://global/music_player.tscn"
 SFXPlayer="*res://global/sfx_player.tscn"
 RNG="*res://global/rng.gd"
 TimeSystem="*res://global/time_system.gd"
+AsyncJobRecoder="*res://global/async_job_recoder.gd"
 
 [debug]
 

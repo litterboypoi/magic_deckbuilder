@@ -5,34 +5,45 @@ extends Node
 @export var modifier_handler: ModifierHandler
 @export var enemy: Enemy
 
-@onready var total_weight := 0.0
+var total_weight := 0.0
 
 var started_flag := false
-var current_action: AIAction : set = _set_current_action
-
-
-func _set_current_action(value: AIAction) -> void:
-	# exit pre action
-	if current_action:
-		current_action.exit()
-		current_action.exit_requested.disconnect(_on_action_exit_requested)
-	# enter new action
-	# 每次都duplicate一份，避免污染ai_acitons的原始数据
-	current_action = value if not value else value.duplicate()
-	if current_action:
-		setup_action(current_action)
-		current_action.exit_requested.connect(_on_action_exit_requested)
-		current_action.remove_requested.connect(_on_action_remove_requested)
-		current_action.change_action_requested.connect(_on_change_action_requested)
-		current_action.enter()
+var current_action: AIAction
+var charging_time: float = 0
 	
 
 func _ready() -> void:
-	Events.enemy_died.connect(_on_enemy_died)
+	TimeSystem.tick.connect(_tick)
+	Events.action_order_completed.connect(_on_action_order_completed)
 	var copy_ai_actions: Array[AIAction] = []
 	for action in ai_actions:
 		copy_ai_actions.append(action.duplicate())
 	ai_actions = copy_ai_actions
+
+
+func _tick(delta: float) -> void:
+	if current_action :
+		charging_time += delta
+		update_action_intent()
+		if charging_time >= current_action.need_time:
+			current_action.excute()
+
+
+func change_action(from: AIAction, to: AIAction) -> void:
+	charging_time = 0
+	if current_action and current_action != from:
+		return
+
+	if current_action:
+		current_action.exit()
+	# current_action = to if not to else to.duplicate()
+	current_action = to
+	update_action_intent()
+	if current_action:
+		current_action.remove_requested.connect(_on_action_remove_requested)
+		current_action.change_action_requested.connect(change_action)
+		current_action.enter()
+
 
 func run_ai() -> void:
 	if started_flag:
@@ -64,13 +75,13 @@ func setup_action(action: AIAction):
 func next_action():
 	var first_action := get_chance_based_action()
 	if first_action:
-		current_action = first_action
+		change_action(current_action, first_action)
 
 
 func try_switch_conditional_action():
 	var new_conditional_action := get_first_conditional_action()
 	if new_conditional_action and current_action != new_conditional_action:
-		current_action = new_conditional_action
+		change_action(current_action, new_conditional_action)
 
 
 func get_chance_based_action() -> AIAction:
@@ -98,10 +109,10 @@ func get_first_conditional_action() -> AIAction:
 	return null
 
 
-func _on_action_exit_requested(_action: Action):
-	current_action = null
-	next_action()
-	
+# will be called by action_order_manager
+func _on_action_order_completed(action_order: ActionOrder):
+	if action_order.action_owner == enemy:
+		next_action()
 
 
 func _on_action_remove_requested(action: AIAction):
@@ -109,10 +120,5 @@ func _on_action_remove_requested(action: AIAction):
 	setup_actions()
 
 
-func _on_change_action_requested(new_action: Action, _old_action: Action):
-	current_action = new_action as AIAction
-
-
-func _on_enemy_died(_enemy: Enemy):
-	if enemy == _enemy and current_action:
-		current_action.exit()
+func update_action_intent():
+	enemy.update_intent(current_action, charging_time)
