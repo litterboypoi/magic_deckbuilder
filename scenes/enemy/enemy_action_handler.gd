@@ -42,6 +42,7 @@ func change_action(from: AIAction, to: AIAction) -> void:
 	current_action = to
 	update_action_intent()
 	if current_action:
+		setup_action(current_action)
 		current_action.remove_requested.connect(_on_action_remove_requested)
 		current_action.change_action_requested.connect(change_action)
 		current_action.enter()
@@ -113,6 +114,8 @@ func get_first_conditional_action() -> AIAction:
 
 # will be called by action_order_manager
 func _on_action_order_completed(action_order: ActionOrder):
+	if not is_inside_tree():
+		return
 	if action_order.action_owner == enemy:
 		next_action()
 

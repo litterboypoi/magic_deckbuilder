@@ -41,14 +41,29 @@ func handle_next_action_callable():
 		Events.action_order_completed.emit(current_order)
 		handle_next_action()
 		return
-	if is_instance_valid(current_order.action_owner):
+	# FIXME is_instance_valid 不能判断一个实例是否刚被调用queue_free
+	if is_instance_valid(current_order.action_owner) and current_order.action_owner.is_inside_tree():
+		current_order.action_owner.tree_exited.connect(_on_doing_callable_owner_tree_exited)
 		var callable = current_order.action_callables.pop_front()
 		callable.call(Callable(self, "_on_callable_finished"))
 	else:
 		handle_next_action()
 
 
+func handle_next_action_delay():
+	var tween = Tween.new()
+	tween.tween_interval(0.17)
+	tween.tween_callback(handle_next_action)
+
+
+func _on_doing_callable_owner_tree_exited() -> void:
+	_on_callable_finished()
+
+
 func _on_callable_finished() -> void:
+	# 清除tree_exited的连接
+	if is_instance_valid(current_order.action_owner) and current_order.action_owner.tree_exited.is_connected(_on_doing_callable_owner_tree_exited):
+		current_order.action_owner.tree_exited.disconnect(_on_doing_callable_owner_tree_exited)
 	# TODO 不仅要等callable完成还要等耗时的其他行为完成
 	if AsyncJobRecoder.is_empty():
 		handle_next_action_callable()
@@ -58,7 +73,7 @@ func _on_callable_finished() -> void:
 func _on_async_jobs_empty() -> void:
 	if is_wating_for_async_jobs_empty:
 		is_wating_for_async_jobs_empty = false
-		handle_next_action_callable()
+		call_deferred("handle_next_action_callable")
 
 func order_actions():
 	var ordered_actions: Array[ActionOrder] = []
