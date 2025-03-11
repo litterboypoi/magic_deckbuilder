@@ -21,6 +21,14 @@ var modifiers: ModifierHandler
 var charging_time: float = 0
 
 
+func get_default_tooltip() -> String:
+	return card_text
+
+
+func get_updated_tooltip(_player_modifiers: ModifierHandler, _enemy_modifiers: ModifierHandler) -> String:
+	return card_text
+
+
 func enter() -> void:
 	pass
 

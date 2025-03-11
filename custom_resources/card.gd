@@ -71,11 +71,11 @@ func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:
 
 
 func get_default_tooltip() -> String:
-	return tooltip_text
+	return action.get_default_tooltip()
 
 
 func get_updated_tooltip(_player_modifiers: ModifierHandler, _enemy_modifiers: ModifierHandler) -> String:
-	return tooltip_text
+	return action.get_updated_tooltip(_player_modifiers, _enemy_modifiers)
 	
 
 func _to_string() -> String:

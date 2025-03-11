@@ -36,4 +36,4 @@ cost = 0
 exhausts = false
 action = SubResource("Resource_rqoxu")
 icon = ExtResource("1_nggpl")
-tooltip_text = "spikes"
+tooltip_text = ""
