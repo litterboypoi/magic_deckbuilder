@@ -1,17 +1,37 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c8g8a5tx1sr2p"]
+[gd_resource type="Resource" script_class="Card" load_steps=8 format=3 uid="uid://c8g8a5tx1sr2p"]
 
-[ext_resource type="Texture2D" uid="uid://cn2c1psh561cc" path="res://art/tile_0127.png" id="1_ipoys"]
-[ext_resource type="Script" path="res://characters/warrior/cards/warrior_true_strength.gd" id="2_pdjl6"]
+[ext_resource type="Texture2D" uid="uid://bho3bya1v7e6o" path="res://art/muscle.png" id="1_6pe6p"]
+[ext_resource type="Script" path="res://actions/status_action/status_action.gd" id="1_11jjv"]
+[ext_resource type="Script" path="res://custom_resources/card.gd" id="2_dgu3c"]
 [ext_resource type="AudioStream" uid="uid://cnqve7dtqjghp" path="res://art/true_strength.ogg" id="3_2ru8h"]
+[ext_resource type="Script" path="res://statuses/muscle.gd" id="4_s5try"]
+
+[sub_resource type="Resource" id="Resource_cq746"]
+script = ExtResource("4_s5try")
+id = "muscle"
+stack_type = 1
+can_expire = false
+duration = 0.0
+stacks = 2
+icon = ExtResource("1_6pe6p")
+tooltip = "muscle"
+
+[sub_resource type="Resource" id="Resource_t1de1"]
+script = ExtResource("1_11jjv")
+status = SubResource("Resource_cq746")
+id = "muscle action"
+need_time = 0.5
+card_text = ""
+sound = ExtResource("3_2ru8h")
 
 [resource]
-script = ExtResource("2_pdjl6")
-id = "warrior_true_strength"
-type = 2
-rarity = 2
+script = ExtResource("2_dgu3c")
+id = "true_strength"
+type = 1
+rarity = 0
 target = 0
-cost = 3
+cost = 1
 exhausts = false
-icon = ExtResource("1_ipoys")
-tooltip_text = "[center]At the start of your turn, gain 2 [color=\"ffdf00\"]Muscle[/color].[/center]"
-sound = ExtResource("3_2ru8h")
+action = SubResource("Resource_t1de1")
+icon = ExtResource("1_6pe6p")
+tooltip_text = "add musase status"

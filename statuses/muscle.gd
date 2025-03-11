@@ -1,5 +1,5 @@
 class_name MuscleStatus
-extends LegalStatus
+extends Status
 
 
 func get_tooltip() -> String:
