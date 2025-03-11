@@ -10,5 +10,5 @@ func execute(targets: Array[Node]) -> void:
 		if not target:
 			continue
 		if target is Enemy or target is Player:
-			target.take_damage(amount, receiver_modifier_type)
+			target.take_damage(amount, receiver_modifier_type, executor)
 			SFXPlayer.play(sound)

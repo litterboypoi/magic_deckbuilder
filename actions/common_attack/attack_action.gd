@@ -7,6 +7,7 @@ extends Action
 func do_excute(finish_callback: Callable) -> void:
 	var tween := action_owner.create_tween().set_trans(Tween.TRANS_QUINT)
 	var damage_effect := DamageEffect.new()
+	damage_effect.executor = action_owner
 	if modifiers:
 		damage_effect.amount = modifiers.get_modified_value(base_damage, Modifier.Type.DMG_DEALT)
 	else:

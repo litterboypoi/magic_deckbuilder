@@ -1,6 +1,8 @@
 class_name Enemy
 extends Area2D
 
+signal damage_taken(damage: int, hp_damage: int, damage_from: Object)
+
 const ARROW_OFFSET := 5
 const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 
@@ -109,7 +111,7 @@ func do_turn() -> void:
 	current_action.perform_action()
 
 
-func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
+func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> void:
 	if stats.health <= 0:
 		return
 	
@@ -118,10 +120,15 @@ func take_damage(damage: int, which_modifier: Modifier.Type) -> void:
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
 	var modified_damage := modifier_handler.get_modified_value(damage, which_modifier)
 	
+	var hp_before_damage := stats.health
+
 	var tween := create_tween()
 	tween.tween_callback(Shaker.shake.bind(self, 16, 0.15))
 	tween.tween_callback(stats.take_damage.bind(modified_damage))
 	tween.tween_interval(0.17)
+	tween.tween_callback(func():
+		damage_taken.emit(modified_damage, hp_before_damage - stats.health, damage_from)
+	)
 
 	tween.finished.connect(
 		func():

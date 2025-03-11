@@ -6,7 +6,7 @@ signal status_destory_requested
 
 enum StackType {NONE, STACK, DURATION}
 
-@export_group("LegalStatus Data")
+@export_group("Status Data")
 @export var id: String
 @export var stack_type: StackType
 # 是否关注时间，can_expire = true 不代表stack_type = DURATION
@@ -14,7 +14,7 @@ enum StackType {NONE, STACK, DURATION}
 @export var duration: float : set = set_duration
 @export var stacks: int : set = set_stacks
 
-@export_group("LegalStatus Visuals")
+@export_group("Status Visuals")
 @export var icon: Texture
 @export_multiline var tooltip: String
 
@@ -25,6 +25,7 @@ func initialize_status(_target: Node) -> void:
 	pass
 
 
+# 通常countdown_end之后有两种情况。1. 销毁 2. stack -1 然后重新计时
 func duration_countdown_end() -> void:
 	pass
 

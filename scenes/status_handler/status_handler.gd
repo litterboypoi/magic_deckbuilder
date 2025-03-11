@@ -23,11 +23,11 @@ func add_status(status: Status) -> void:
 	else:
 		if not has_status(status.id):
 			_create_status_ui(status)
-		
-		if status.stack_type == Status.StackType.DURATION:
-			get_status(status.id).duration += status.duration
-		elif status.stack_type == Status.StackType.STACK:
-			get_status(status.id).stacks += status.stacks
+		else:
+			if status.stack_type == Status.StackType.DURATION:
+				get_status(status.id).duration += status.duration
+			elif status.stack_type == Status.StackType.STACK:
+				get_status(status.id).stacks += status.stacks
 	
 
 
