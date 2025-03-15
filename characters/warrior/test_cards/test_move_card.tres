@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Card" load_steps=5 format=3 uid="uid://jq4tr7crxsjd"]
+
+[ext_resource type="Script" path="res://custom_resources/card.gd" id="1_8qii4"]
+[ext_resource type="Script" path="res://actions/move_action.gd" id="1_avsa8"]
+[ext_resource type="Texture2D" uid="uid://7eek2jxk3xu8" path="res://art/arrow_small_disabled.png" id="2_oqvmf"]
+
+[sub_resource type="Resource" id="Resource_kpo50"]
+script = ExtResource("1_avsa8")
+distance = -9
+id = "move"
+need_time = 0.5
+card_text = "move"
+
+[resource]
+script = ExtResource("1_8qii4")
+id = "move_card"
+type = 1
+rarity = 0
+target = 0
+cost = 0
+exhausts = false
+action = SubResource("Resource_kpo50")
+icon = ExtResource("2_oqvmf")
+tooltip_text = ""

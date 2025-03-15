@@ -10,6 +10,8 @@ extends Node2D
 @onready var player_handler: PlayerHandler = $PlayerHandler
 @onready var enemy_handler: EnemyHandler = $EnemyHandler
 @onready var player: Player = $Player
+@onready var location_manager: LocationManager = $LocationManager
+
 
 
 func _ready() -> void:
@@ -31,6 +33,8 @@ func start_battle() -> void:
 	player_handler.relics = relics
 	enemy_handler.setup_enemies(battle_stats)
 	enemy_handler.reset_enemy_actions()
+	
+	location_manager.init_units_position()
 	
 	relics.relics_activated.connect(_on_relics_activated)
 	relics.activate_relics_by_type(Relic.Type.START_OF_COMBAT)

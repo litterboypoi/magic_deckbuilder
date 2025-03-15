@@ -13,6 +13,8 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var time_bar: TimeBar = $TimeBar
 
+var location: int = 0
+
 
 func _ready() -> void:
 	status_handler.status_owner = self
