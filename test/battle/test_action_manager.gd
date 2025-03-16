@@ -68,4 +68,4 @@ func test_complex_chain_action_order():
 	)
 	await out_promise.async_awaiter()
 	self.action_order_squence += "4"
-	assert_eq(action_order_squence, "1324", " action order  should be 1234")
+	assert_eq(action_order_squence, "1324", " action order  should be 1324")

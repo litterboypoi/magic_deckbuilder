@@ -24,12 +24,12 @@ func push_action(action: Callable) -> Promise:
 
 func _process_stack():
 	if action_stack.size() == 0:
-		current_action = null
 		return
 	current_action = action_stack.back()
 	if current_action.done:
 		current_action.promise.resolve()
 		action_stack.pop_back()
+		current_action = null
 		_process_stack()
 		return
 	else:
@@ -40,4 +40,5 @@ func _process_stack():
 		if current_action == action_stack.back():
 			current_action.promise.resolve()
 			action_stack.pop_back()
+		current_action = null
 		_process_stack()
