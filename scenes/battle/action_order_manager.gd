@@ -42,7 +42,7 @@ func handle_next_action_callable():
 		handle_next_action()
 		return
 	# FIXME is_instance_valid 不能判断一个实例是否刚被调用queue_free
-	if is_instance_valid(current_order.action_owner) and current_order.action_owner.is_inside_tree():
+	if is_instance_valid(current_order.action_owner) and not current_order.action_owner.is_queued_for_deletion():
 		current_order.action_owner.tree_exited.connect(_on_doing_callable_owner_tree_exited)
 		var callable = current_order.action_callables.pop_front()
 		callable.call(Callable(self, "_on_callable_finished"))

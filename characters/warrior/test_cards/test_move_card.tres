@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_kpo50"]
 script = ExtResource("1_avsa8")
-distance = -9
+distance = 5
 id = "move"
 need_time = 0.5
 card_text = "move"
