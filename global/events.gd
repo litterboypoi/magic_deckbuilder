@@ -9,6 +9,11 @@ signal card_played(card: Card)
 signal card_tooltip_requested(card: Card)
 signal tooltip_hide_requested
 
+# Battle-related events
+signal battle_started
+signal battle_ended
+signal battle_ticked
+
 # BattleUI-related events
 signal battle_ui_mask_show_requested
 signal battle_ui_mask_hide_requested

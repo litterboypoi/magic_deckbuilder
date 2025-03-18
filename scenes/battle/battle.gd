@@ -19,25 +19,49 @@ func _ready() -> void:
 	Events.enemy_turn_ended.connect(_on_enemy_turn_ended)
 	
 	Events.player_turn_ended.connect(player_handler.end_turn)
-	# Events.player_hand_discarded.connect(enemy_handler.start_turn)
+	Events.player_hand_discarded.connect(tick)
 	Events.player_died.connect(_on_player_died)
 
 
 func start_battle() -> void:
 	get_tree().paused = false
 	MusicPlayer.play(music, true)
+	ActionManager.clear()
 	TimeSystem.time_frozen()
 	
 	battle_ui.char_stats = char_stats
 	player.stats = char_stats
 	player_handler.relics = relics
 	enemy_handler.setup_enemies(battle_stats)
-	enemy_handler.reset_enemy_actions()
 	
 	location_manager.init_units_position()
+	ActionManager.push_action(
+		func ():
+			Events.battle_started.emit()
+	).then(
+		func (_data):
+			player_handler.start_battle(char_stats)
+			battle_ui.initialize_card_pile_ui()
+			start_new_turn()
+	)
 	
-	relics.relics_activated.connect(_on_relics_activated)
-	relics.activate_relics_by_type(Relic.Type.START_OF_COMBAT)
+
+
+func start_new_turn():
+	enemy_handler.reset_enemy_actions()
+	player_handler.start_turn()
+
+
+func tick() -> void:
+	player.action_group.tick_index += 1
+	for enemy: Enemy in enemy_handler.get_children():
+		enemy.action_group.tick_index +=1
+	await ActionManager.push_action(
+		func ():
+			Events.battle_ticked.emit()
+	).async_awaiter()
+	await player_handler.tick()
+	enemy_handler.tick()
 
 
 func _on_enemies_child_order_changed() -> void:
@@ -46,8 +70,10 @@ func _on_enemies_child_order_changed() -> void:
 
 
 func _on_enemy_turn_ended() -> void:
-	player_handler.start_turn()
-	enemy_handler.reset_enemy_actions()
+	if player_handler.is_action_group_reach_end():
+		start_new_turn()
+	else:
+		tick()
 
 
 func _on_player_died() -> void:

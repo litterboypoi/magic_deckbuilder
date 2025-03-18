@@ -15,7 +15,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var time_bar: TimeBar = $TimeBar
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
-@onready var enemy_action_handler: EnemyActionHandler = $EnemyActionHandler
+@onready var action_group: ActionGroup = $ActionGroup
 
 var enemy_action_picker: EnemyActionPicker
 var current_action: EnemyAction : set = set_current_action
@@ -42,9 +42,6 @@ func set_enemy_stats(value: EnemyStats) -> void:
 
 
 func setup_ai() -> void:
-	# FIXME 防止被多次调用。
-	enemy_action_handler.run_ai()
-	
 	if enemy_action_picker:
 		enemy_action_picker.queue_free()
 		
@@ -101,6 +98,12 @@ func legal_update_intent() -> void:
 	#if current_action:
 		#current_action.update_intent_text()
 		#intent_ui.update_intent(current_action.intent)
+
+
+func do_tick() -> void:
+	var reach_action = action_group.get_reach_action()
+	if reach_action:
+		await ActionManager.push_action(reach_action.apply).async_awaiter()
 
 
 func do_turn() -> void:

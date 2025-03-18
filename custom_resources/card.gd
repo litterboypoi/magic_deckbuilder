@@ -54,15 +54,15 @@ func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierH
 	Events.card_played.emit(self)
 	char_stats.mana -= cost
 	
-	var _targets = targets
-	if not is_single_targeted():
-		_targets = _get_targets(targets)
-	var new_action: Action = action.duplicate()
-	new_action.action_owner = player_handler.player
-	new_action.targets = _targets
-	new_action.modifiers = modifiers
+	# var _targets = targets
+	# if not is_single_targeted():
+	# 	_targets = _get_targets(targets)
+	# var new_action: Action = action.duplicate()
+	# new_action.action_owner = player_handler.player
+	# new_action.targets = _targets
+	# new_action.modifiers = modifiers
 	
-	player_handler.start_action(new_action)
+	# player_handler.start_action(new_action)
 
 
 func apply_effects(_targets: Array[Node], _modifiers: ModifierHandler) -> void:

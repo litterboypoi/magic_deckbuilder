@@ -25,14 +25,7 @@ var charging_time: float = 0
 
 
 func _ready() -> void:
-	TimeSystem.tick.connect(_tick)
-	Events.action_order_completed.connect(_on_action_order_completed)
 	Events.card_played.connect(_on_card_played)
-
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_released("rest"):
-		rest()
 
 
 func start_battle(char_stats: CharacterStats) -> void:
@@ -42,18 +35,29 @@ func start_battle(char_stats: CharacterStats) -> void:
 	character.discard = CardPile.new()
 	relics.relics_activated.connect(_on_relics_activated)
 	player.status_handler.statuses_applied.connect(_on_statuses_applied)
-	start_turn()
 
 
+# 抽牌、设置新的行动顺序
 func start_turn() -> void:
 	character.block = 0
 	character.reset_mana()
-	relics.activate_relics_by_type(Relic.Type.START_OF_TURN)
+	player.action_group.actions.clear()
+	draw_cards(character.cards_per_turn, true)
 
 
 func end_turn() -> void:
 	hand.disable_hand()
-	relics.activate_relics_by_type(Relic.Type.END_OF_TURN)
+	discard_cards()
+
+
+func tick() -> void:
+	var reach_action = player.action_group.get_reach_action()
+	if reach_action:
+		await ActionManager.push_action(reach_action.apply).async_awaiter()
+
+
+func is_action_group_reach_end() -> bool:
+	return player.action_group.tick_index == player.action_group.get_tick_length()
 
 
 func draw_card() -> void:
@@ -132,6 +136,8 @@ func reshuffle_deck_from_discard() -> void:
 
 
 func _on_card_played(card: Card) -> void:
+	# TODO 暂时写在这里
+	player.action_group.actions.append(card.action.duplicate())
 	if card.exhausts or card.type == Card.Type.POWER:
 		return
 	
@@ -152,70 +158,3 @@ func _on_relics_activated(type: Relic.Type) -> void:
 			player.status_handler.apply_statuses_by_type(LegalStatus.Type.START_OF_TURN)
 		Relic.Type.END_OF_TURN:
 			player.status_handler.apply_statuses_by_type(LegalStatus.Type.END_OF_TURN)
-
-
-## new logic of real time
-func start_action(new_action: Action):
-	if is_resting:
-		return
-	charging_time = 0
-	if current_action:
-		end_action()
-	current_action = new_action
-	current_action.enter()
-	update_action_intent()
-	if current_action.need_time == 0:
-		current_action.excute()
-	else:
-		TimeSystem.time_flow()
-	
-
-func end_action():
-	current_action.exit()
-	current_action = null
-	update_action_intent()
-	TimeSystem.time_frozen()
-
-
-func update_action_intent():
-	if current_action:
-		player.time_bar.set_time_bar(charging_time, current_action.need_time)
-	else:
-		player.time_bar.hide()
-
-
-func rest():
-	if current_action:
-		return
-	is_resting = true
-	discard_cards()
-	TimeSystem.time_flow()
-
-
-func _exit_rest():
-	is_resting = false
-	rest_time = 0
-	TimeSystem.time_frozen()
-	draw_cards(character.cards_per_turn, true)
-
-
-
-func _on_action_order_completed(action_order: ActionOrder):
-	if action_order.action_owner == player:
-		end_action()
-
-
-func _tick(delta: float) -> void:
-	if is_resting:
-		var REST_TIME = 1
-		var RECOVER_PER_SECOND: float = 3
-		player.stats.mana += delta * RECOVER_PER_SECOND
-		rest_time += delta
-		if rest_time >= REST_TIME:
-			_exit_rest()
-
-	if current_action :
-		charging_time += delta
-		update_action_intent()
-		if charging_time >= current_action.need_time:
-			current_action.excute()

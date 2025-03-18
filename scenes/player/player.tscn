@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://2n4lap6w3pde"]
+[gd_scene load_steps=9 format=3 uid="uid://2n4lap6w3pde"]
 
 [ext_resource type="Texture2D" uid="uid://cpydvk8mq66o5" path="res://art/tile_0087.png" id="1_0r2oj"]
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_il1gs"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bwet1kdg2v1di" path="res://scenes/status_handler/status_handler.tscn" id="4_60v6k"]
 [ext_resource type="PackedScene" uid="uid://ctvxie3ni1ik4" path="res://scenes/modifier_handler/modifier_handler.tscn" id="5_v2emp"]
 [ext_resource type="PackedScene" uid="uid://bqefj5q31b84i" path="res://scenes/modifier_handler/modifier.tscn" id="6_jup6q"]
+[ext_resource type="Script" path="res://scenes/action_group/action_group.gd" id="8_rkgqa"]
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_il1gs")
@@ -41,3 +42,6 @@ type = 1
 
 [node name="CardCostModifier" parent="ModifierHandler" instance=ExtResource("6_jup6q")]
 type = 2
+
+[node name="ActionGroup" type="Node" parent="."]
+script = ExtResource("8_rkgqa")

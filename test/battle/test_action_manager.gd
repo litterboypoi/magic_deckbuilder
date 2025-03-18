@@ -1,13 +1,11 @@
 extends GutTest
 
-var action_manager: ActionManager
-
 func before_each():
-	action_manager = ActionManager.new()
+	ActionManager.clear()
 
 
 func test_should_resolve_when_no_chain_action():
-	var out_promise = action_manager.push_action(
+	var out_promise = ActionManager.push_action(
 		func():
 			var promise = Promise.new()
 			PromiseTestHelpers.resolve_after_time(self, promise)
@@ -23,12 +21,12 @@ func test_should_resolve_when_no_chain_action():
 var action_order_squence = ""
 func test_chain_action_order():
 	action_order_squence = ""
-	var out_promise = action_manager.push_action(
+	var out_promise = ActionManager.push_action(
 		func():
 			var promise = Promise.new()
 			promise.resolve()
 			self.action_order_squence += "1"
-			action_manager.push_action(
+			ActionManager.push_action(
 				func():
 					var inner_promise = Promise.new()
 					inner_promise.resolve()
@@ -45,19 +43,19 @@ func test_chain_action_order():
 
 func test_complex_chain_action_order():
 	action_order_squence = ""
-	var out_promise = action_manager.push_action(
+	var out_promise = ActionManager.push_action(
 		func():
 			var promise = Promise.new()
 			promise.resolve()
 			self.action_order_squence += "1"
-			action_manager.push_action(
+			ActionManager.push_action(
 				func():
 					var inner_promise = Promise.new()
 					PromiseTestHelpers.resolve_after_time(self, inner_promise)
 					self.action_order_squence += "2"
 					return inner_promise
 			)
-			action_manager.push_action(
+			ActionManager.push_action(
 				func():
 					var inner_promise = Promise.new()
 					inner_promise.resolve()

@@ -6,8 +6,6 @@ var acting_enemies: Array[Enemy] = []
 
 func _ready() -> void:
 	Events.enemy_died.connect(_on_enemy_died)
-	Events.enemy_action_completed.connect(_on_enemy_action_completed)
-	Events.player_hand_drawn.connect(_on_player_hand_drawn)
 
 
 func setup_enemies(battle_stats: BattleStats) -> void:
@@ -33,6 +31,17 @@ func reset_enemy_actions() -> void:
 		enemy.update_action()
 
 
+func tick() -> void:
+	if get_child_count() == 0:
+		return
+	
+	acting_enemies.clear()
+	for enemy: Enemy in get_children():
+		acting_enemies.append(enemy)
+
+	_start_next_enemy_turn()
+
+
 func start_turn() -> void:
 	if get_child_count() == 0:
 		return
@@ -49,7 +58,11 @@ func _start_next_enemy_turn() -> void:
 		Events.enemy_turn_ended.emit()
 		return
 	
-	acting_enemies[0].status_handler.apply_statuses_by_type(LegalStatus.Type.START_OF_TURN)
+	var current_enemy = acting_enemies[0]
+	if not current_enemy.is_queued_for_deletion():
+		await current_enemy.do_tick()
+	acting_enemies.erase(current_enemy)
+	_start_next_enemy_turn()
 
 
 func _on_enemy_statuses_applied(type: LegalStatus.Type, enemy: Enemy) -> void:
@@ -61,18 +74,10 @@ func _on_enemy_statuses_applied(type: LegalStatus.Type, enemy: Enemy) -> void:
 			_start_next_enemy_turn()
 
 
+# 这么做感觉会出问题
 func _on_enemy_died(enemy: Enemy) -> void:
 	var is_enemy_turn := acting_enemies.size() > 0
 	acting_enemies.erase(enemy)
 	
 	if is_enemy_turn:
 		_start_next_enemy_turn()
-
-
-func _on_enemy_action_completed(enemy: Enemy) -> void:
-	enemy.status_handler.apply_statuses_by_type(LegalStatus.Type.END_OF_TURN)
-
-
-func _on_player_hand_drawn() -> void:
-	for enemy: Enemy in get_children():
-		enemy.legal_update_intent()

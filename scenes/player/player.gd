@@ -12,6 +12,7 @@ const WHITE_SPRITE_MATERIAL := preload("res://art/white_sprite_material.tres")
 @onready var status_handler: StatusHandler = $StatusHandler
 @onready var modifier_handler: ModifierHandler = $ModifierHandler
 @onready var time_bar: TimeBar = $TimeBar
+@onready var action_group: ActionGroup = $ActionGroup
 
 var location: int = 0
 

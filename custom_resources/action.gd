@@ -9,6 +9,7 @@ signal excute_finished(action: Action)
 
 @export var id: String
 @export var need_time: float
+@export_range(1, 10) var tick: int = 1
 @export_multiline var card_text: String
 @export var sound: AudioStream
 
@@ -19,6 +20,10 @@ var modifiers: ModifierHandler
 
 # change when during action
 var charging_time: float = 0
+
+
+func apply() -> Promise:
+	return null
 
 
 func get_default_tooltip() -> String:
@@ -46,7 +51,3 @@ func excute() -> void:
 
 func get_callables() -> Array[Callable]:
 	return []
-
-
-func tick(_delta: float) -> void:
-	pass
