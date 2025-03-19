@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bwet1kdg2v1di" path="res://scenes/status_handler/status_handler.tscn" id="4_60v6k"]
 [ext_resource type="PackedScene" uid="uid://ctvxie3ni1ik4" path="res://scenes/modifier_handler/modifier_handler.tscn" id="5_v2emp"]
 [ext_resource type="PackedScene" uid="uid://bqefj5q31b84i" path="res://scenes/modifier_handler/modifier.tscn" id="6_jup6q"]
-[ext_resource type="Script" path="res://scenes/action_group/action_group.gd" id="8_rkgqa"]
+[ext_resource type="PackedScene" uid="uid://dnkn8qerymgo2" path="res://scenes/action_group/ActionGroup.tscn" id="8_pql1p"]
 
 [node name="Player" type="Node2D" groups=["player"]]
 script = ExtResource("1_il1gs")
@@ -43,5 +43,8 @@ type = 1
 [node name="CardCostModifier" parent="ModifierHandler" instance=ExtResource("6_jup6q")]
 type = 2
 
-[node name="ActionGroup" type="Node" parent="."]
-script = ExtResource("8_rkgqa")
+[node name="ActionGroup" parent="." instance=ExtResource("8_pql1p")]
+offset_left = -12.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -48.0

@@ -35,7 +35,7 @@ func start_battle(char_stats: CharacterStats) -> void:
 func start_turn() -> void:
 	character.block = 0
 	character.reset_mana()
-	player.action_group.actions.clear()
+	player.action_group.clear()
 	draw_cards(character.cards_per_turn, true)
 
 
@@ -47,7 +47,7 @@ func end_turn() -> void:
 func tick() -> void:
 	var reach_action = player.action_group.get_reach_action()
 	if reach_action:
-		await ActionManager.push_action(reach_action.async_apply).async_awaiter()
+		await ActionManager.push_action(reach_action.async_apply.bind(player)).async_awaiter()
 
 
 func is_action_group_reach_end() -> bool:
@@ -131,7 +131,7 @@ func reshuffle_deck_from_discard() -> void:
 
 func _on_card_played(card: Card) -> void:
 	# TODO 暂时写在这里
-	player.action_group.actions.append(card.action.duplicate())
+	player.action_group.append_action(card.action.duplicate())
 	if card.exhausts or card.type == Card.Type.POWER:
 		return
 	

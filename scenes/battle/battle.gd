@@ -23,6 +23,10 @@ func _ready() -> void:
 	Events.player_died.connect(_on_player_died)
 
 
+func _exit_tree() -> void:
+	ActionManager.clear()
+
+
 func start_battle() -> void:
 	get_tree().paused = false
 	MusicPlayer.play(music, true)
@@ -48,6 +52,9 @@ func start_battle() -> void:
 
 
 func start_new_turn():
+	player.action_group.tick_index = 0
+	for enemy: Enemy in enemy_handler.get_children():
+		enemy.action_group.tick_index = 0
 	enemy_handler.reset_enemy_actions()
 	player_handler.start_turn()
 
@@ -66,7 +73,13 @@ func tick() -> void:
 
 func _on_enemies_child_order_changed() -> void:
 	if enemy_handler.get_child_count() == 0 and is_instance_valid(relics):
-		relics.activate_relics_by_type(Relic.Type.END_OF_COMBAT)
+		ActionManager.push_action(
+			func ():
+				Events.battle_ended.emit()
+		).then(
+			func (_data):
+				Events.battle_over_screen_requested.emit("Victorious!", BattleOverPanel.Type.WIN)
+		)
 
 
 func _on_enemy_turn_ended() -> void:
@@ -79,12 +92,3 @@ func _on_enemy_turn_ended() -> void:
 func _on_player_died() -> void:
 	Events.battle_over_screen_requested.emit("Game Over!", BattleOverPanel.Type.LOSE)
 	SaveGame.delete_data()
-
-
-func _on_relics_activated(type: Relic.Type) -> void:
-	match type:
-		Relic.Type.START_OF_COMBAT:
-			player_handler.start_battle(char_stats)
-			battle_ui.initialize_card_pile_ui()
-		Relic.Type.END_OF_COMBAT:
-			Events.battle_over_screen_requested.emit("Victorious!", BattleOverPanel.Type.WIN)

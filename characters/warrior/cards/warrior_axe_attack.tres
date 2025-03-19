@@ -9,10 +9,9 @@
 script = ExtResource("1_f6xul")
 base_damage = 6
 id = "double_attack"
-need_time = 1.5
 tick = 1
-card_text = ""
-sound = ExtResource("3_fudr5")
+cost = 0
+card_text = "double_attack"
 
 [resource]
 script = ExtResource("2_brwxd")

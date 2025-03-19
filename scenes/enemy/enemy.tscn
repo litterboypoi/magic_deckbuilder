@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bwet1kdg2v1di" path="res://scenes/status_handler/status_handler.tscn" id="6_3dhyq"]
 [ext_resource type="PackedScene" uid="uid://ctvxie3ni1ik4" path="res://scenes/modifier_handler/modifier_handler.tscn" id="7_xbm7w"]
 [ext_resource type="PackedScene" uid="uid://bqefj5q31b84i" path="res://scenes/modifier_handler/modifier.tscn" id="8_akusk"]
-[ext_resource type="Script" path="res://scenes/action_group/action_group.gd" id="16_7ubac"]
+[ext_resource type="PackedScene" uid="uid://dnkn8qerymgo2" path="res://scenes/action_group/ActionGroup.tscn" id="10_rsxm8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3gsft"]
 
@@ -59,8 +59,11 @@ status_owner = NodePath("..")
 [node name="DamageTakenModifier" parent="ModifierHandler" instance=ExtResource("8_akusk")]
 type = 1
 
-[node name="ActionGroup" type="Node" parent="."]
-script = ExtResource("16_7ubac")
+[node name="ActionGroup" parent="." instance=ExtResource("10_rsxm8")]
+offset_left = -17.0
+offset_top = -71.0
+offset_right = -17.0
+offset_bottom = -71.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

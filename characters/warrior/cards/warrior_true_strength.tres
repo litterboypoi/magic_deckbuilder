@@ -20,8 +20,8 @@ tooltip = "muscle"
 script = ExtResource("1_11jjv")
 status = SubResource("Resource_cq746")
 id = "muscle action"
-need_time = 0.5
 tick = 1
+cost = 0
 card_text = ""
 sound = ExtResource("3_2ru8h")
 

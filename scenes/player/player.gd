@@ -47,8 +47,6 @@ func update_stats() -> void:
 func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> void:
 	if stats.health <= 0:
 		return
-	
-	var job_id = AsyncJobRecoder.start_job(self)
 
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
 	var modified_damage := modifier_handler.get_modified_value(damage, which_modifier)
@@ -70,6 +68,4 @@ func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object
 			if stats.health <= 0:
 				Events.player_died.emit()
 				queue_free()
-			
-			AsyncJobRecoder.finish_job(job_id)
 	)
