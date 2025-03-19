@@ -9,6 +9,7 @@ script = ExtResource("1_avsa8")
 distance = 5
 id = "move"
 need_time = 0.5
+tick = 1
 card_text = "move"
 
 [resource]

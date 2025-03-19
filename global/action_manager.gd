@@ -39,7 +39,7 @@ func _process_stack():
 		_process_stack()
 		return
 	else:
-		var action_promise = current_action.action.call()
+		var action_promise = await current_action.action.call()
 		if action_promise is Promise:
 			await action_promise.async_awaiter()
 		current_action.done = true

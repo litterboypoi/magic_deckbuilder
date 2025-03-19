@@ -18,12 +18,6 @@ const HAND_DISCARD_INTERVAL := 0.25
 
 var character: CharacterStats
 
-var current_action: Action
-var is_resting: bool = false
-var rest_time: float = 0
-var charging_time: float = 0
-
-
 func _ready() -> void:
 	Events.card_played.connect(_on_card_played)
 
@@ -53,7 +47,7 @@ func end_turn() -> void:
 func tick() -> void:
 	var reach_action = player.action_group.get_reach_action()
 	if reach_action:
-		await ActionManager.push_action(reach_action.apply).async_awaiter()
+		await ActionManager.push_action(reach_action.async_apply).async_awaiter()
 
 
 func is_action_group_reach_end() -> bool:

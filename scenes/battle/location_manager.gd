@@ -21,8 +21,8 @@ func get_units_in_battle():
 	return units
 
 
-func get_units_in_range(left: int, right: int):
-	var units = []
+func get_units_in_range(left: int, right: int) -> Array[Node]:
+	var units: Array[Node] = []
 	for unit in get_units_in_battle():
 		if unit is Player or unit is Enemy:
 			if unit.location >= left and unit.location <= right:

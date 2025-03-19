@@ -80,7 +80,7 @@ func update_enemy() -> void:
 	update_stats()
 
 
-func update_intent(action: AIAction, charging_time: float):
+func update_intent(action: AIAction):
 	if not action:
 		intent_ui.hide()
 		time_bar.hide()
@@ -90,7 +90,6 @@ func update_intent(action: AIAction, charging_time: float):
 	time_bar.show()
 	action.update_intent_text()
 	intent_ui.update_intent(action.intent)
-	time_bar.set_time_bar(charging_time, action.need_time)
 
 
 func legal_update_intent() -> void:
@@ -103,7 +102,7 @@ func legal_update_intent() -> void:
 func do_tick() -> void:
 	var reach_action = action_group.get_reach_action()
 	if reach_action:
-		await ActionManager.push_action(reach_action.apply).async_awaiter()
+		await ActionManager.push_action(reach_action.async_apply).async_awaiter()
 
 
 func do_turn() -> void:

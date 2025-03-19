@@ -52,7 +52,7 @@ func _get_targets(targets: Array[Node]) -> Array[Node]:
 
 func play(targets: Array[Node], char_stats: CharacterStats, modifiers: ModifierHandler, player_handler: PlayerHandler) -> void:
 	Events.card_played.emit(self)
-	char_stats.mana -= cost
+	# char_stats.mana -= cost
 	
 	# var _targets = targets
 	# if not is_single_targeted():

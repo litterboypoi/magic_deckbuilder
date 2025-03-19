@@ -23,6 +23,7 @@ script = ExtResource("1_6c8j3")
 status = SubResource("Resource_7dq8t")
 id = "warrior_spikes"
 need_time = 0.0
+tick = 1
 card_text = "spike"
 sound = ExtResource("2_6eu5d")
 
