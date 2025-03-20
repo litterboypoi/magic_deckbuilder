@@ -5,6 +5,7 @@ extends Control
 
 @onready var icon: TextureRect = $Icon
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var count: Label = $Count
 
 
 func set_relic(new_relic: Relic) -> void:
@@ -17,6 +18,11 @@ func set_relic(new_relic: Relic) -> void:
 
 func flash() -> void:
 	animation_player.play("flash")
+
+
+func set_count(num: int) -> void:
+	count.visible = num != 0
+	count.text = str(num)
 
 
 func _on_gui_input(event: InputEvent) -> void:

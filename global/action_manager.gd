@@ -52,11 +52,12 @@ func push_mico_action(action: Callable) -> Promise:
 
 func _process_stack():
 	if action_stack.size() == 0:
+		action_stack = null
 		return
 	current_action = action_stack.back()
 	if current_action.done:
-		current_action.promise.resolve()
 		action_stack.pop_back()
+		current_action.promise.resolve()
 		current_action = null
 		_process_stack()
 		return
@@ -67,8 +68,9 @@ func _process_stack():
 		current_action.done = true
 		if current_action == action_stack.back():
 			# resolve 之后会立即执行 await async_waiter 的代码
-			# 而不是下一行 action_stack.pop_back()
-			current_action.promise.resolve()
+			# 而不是下一行
+			# 先pop再resolve很重要，因为resolve可能会导致新的action被push
 			action_stack.pop_back()
+			current_action.promise.resolve()
 		current_action = null
 		_process_stack()

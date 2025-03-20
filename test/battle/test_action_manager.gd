@@ -1,7 +1,8 @@
 extends GutTest
 
 func before_each():
-	ActionManager.clear()
+	pass
+	#ActionManager.clear()
 
 
 func test_should_resolve_when_no_chain_action():
@@ -26,7 +27,7 @@ func test_chain_action_order():
 			var promise = Promise.new()
 			promise.resolve()
 			self.action_order_squence += "1"
-			ActionManager.push_action(
+			ActionManager.push_mico_action(
 				func():
 					var inner_promise = Promise.new()
 					inner_promise.resolve()
@@ -48,14 +49,14 @@ func test_complex_chain_action_order():
 			var promise = Promise.new()
 			promise.resolve()
 			self.action_order_squence += "1"
-			ActionManager.push_action(
+			ActionManager.push_mico_action(
 				func():
 					var inner_promise = Promise.new()
 					PromiseTestHelpers.resolve_after_time(self, inner_promise)
 					self.action_order_squence += "2"
 					return inner_promise
 			)
-			ActionManager.push_action(
+			ActionManager.push_mico_action(
 				func():
 					var inner_promise = Promise.new()
 					inner_promise.resolve()
@@ -66,4 +67,8 @@ func test_complex_chain_action_order():
 	)
 	await out_promise.async_awaiter()
 	self.action_order_squence += "4"
-	assert_eq(action_order_squence, "1324", " action order  should be 1324")
+	await ActionManager.push_action(
+		func():
+			self.action_order_squence += "5"
+	).async_awaiter()
+	assert_eq(action_order_squence, "13245", " action order  should be 13245")

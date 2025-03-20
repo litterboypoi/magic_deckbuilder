@@ -8,12 +8,8 @@ enum Target {SELF, RANGE, SELECT}
 @export var cost = 0
 @export_multiline var card_text: String
 
-# must be set when created
-var modifiers: ModifierHandler
-
-
-func async_apply(_owner: Node) -> Promise:
-	return null
+func async_apply(_owner: Node) -> void:
+	await _owner.create_tween().tween_interval(0.1).finished
 
 
 func get_default_tooltip() -> String:

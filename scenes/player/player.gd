@@ -44,9 +44,11 @@ func update_stats() -> void:
 	stats_ui.update_stats(stats)
 
 
-func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> void:
+func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> Promise:
+	var promise = Promise.new()
 	if stats.health <= 0:
-		return
+		promise.resolve()
+		return promise
 
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
 	var modified_damage := modifier_handler.get_modified_value(damage, which_modifier)
@@ -68,4 +70,6 @@ func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object
 			if stats.health <= 0:
 				Events.player_died.emit()
 				queue_free()
+			promise.resolve()
 	)
+	return promise

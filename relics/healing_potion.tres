@@ -13,4 +13,4 @@ character_type = 2
 starter_relic = true
 icon = ExtResource("1_xg7m0")
 tooltip = "[color=\"ffdf00\"]Endless Healing Potion[/color]
-At the end of combat, heal 6 HP."
+Heal 6 HP per 4 ticks."

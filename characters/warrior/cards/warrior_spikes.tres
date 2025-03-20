@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="Card" load_steps=9 format=3 uid="uid://bv8kgw4u2s47a"]
+[gd_resource type="Resource" script_class="Card" load_steps=8 format=3 uid="uid://bv8kgw4u2s47a"]
 
 [ext_resource type="Script" path="res://custom_resources/card.gd" id="1_4c1kn"]
 [ext_resource type="Script" path="res://actions/status_action/status_action.gd" id="1_6c8j3"]
 [ext_resource type="Texture2D" uid="uid://c4e7ovx16yfl1" path="res://art/tile_0113.png" id="1_nggpl"]
-[ext_resource type="AudioStream" uid="uid://cnqve7dtqjghp" path="res://art/true_strength.ogg" id="2_6eu5d"]
 [ext_resource type="Script" path="res://statuses/spikes.gd" id="3_chuiy"]
 [ext_resource type="AudioStream" uid="uid://b1vpjjmi5cj3n" path="res://art/axe.ogg" id="4_dodcy"]
 
@@ -25,7 +24,6 @@ id = "warrior_spikes"
 tick = 1
 cost = 0
 card_text = "spike"
-sound = ExtResource("2_6eu5d")
 
 [resource]
 script = ExtResource("1_4c1kn")

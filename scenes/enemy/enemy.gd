@@ -102,7 +102,7 @@ func legal_update_intent() -> void:
 func do_tick() -> void:
 	var reach_action = action_group.get_reach_action()
 	if reach_action:
-		await ActionManager.push_action(reach_action.async_apply).async_awaiter()
+		await reach_action.async_apply(self)
 
 
 func do_turn() -> void:
@@ -114,9 +114,11 @@ func do_turn() -> void:
 	current_action.perform_action()
 
 
-func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> void:
+func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object = null) -> Promise:
+	var promise = Promise.new()
 	if stats.health <= 0:
-		return
+		promise.resolve()
+		return promise
 
 	sprite_2d.material = WHITE_SPRITE_MATERIAL
 	var modified_damage := modifier_handler.get_modified_value(damage, which_modifier)
@@ -138,7 +140,9 @@ func take_damage(damage: int, which_modifier: Modifier.Type, damage_from: Object
 			if stats.health <= 0:
 				Events.enemy_died.emit(self)
 				queue_free()
+			promise.resolve()
 	)
+	return promise
 
 
 func _on_area_entered(_area: Area2D) -> void:

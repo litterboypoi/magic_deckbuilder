@@ -72,7 +72,7 @@ func tick() -> void:
 
 
 func _on_enemies_child_order_changed() -> void:
-	if enemy_handler.get_child_count() == 0 and is_instance_valid(relics):
+	if enemy_handler.get_child_count() == 0:
 		ActionManager.push_action(
 			func ():
 				Events.battle_ended.emit()
@@ -84,9 +84,9 @@ func _on_enemies_child_order_changed() -> void:
 
 func _on_enemy_turn_ended() -> void:
 	if player_handler.is_action_group_reach_end():
-		start_new_turn()
+		call_deferred("start_new_turn")
 	else:
-		tick()
+		call_deferred("tick")
 
 
 func _on_player_died() -> void:

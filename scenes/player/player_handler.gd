@@ -47,11 +47,11 @@ func end_turn() -> void:
 func tick() -> void:
 	var reach_action = player.action_group.get_reach_action()
 	if reach_action:
-		await ActionManager.push_action(reach_action.async_apply.bind(player)).async_awaiter()
+		await reach_action.async_apply(player)
 
 
 func is_action_group_reach_end() -> bool:
-	return player.action_group.tick_index == player.action_group.get_tick_length()
+	return player.action_group.tick_index == player.action_group.max_tick_length
 
 
 func draw_card() -> void:
