@@ -20,6 +20,8 @@ signal battle_ui_mask_hide_requested
 signal select_hand_requested(select_count: int, reason: String, select_optional: bool)
 signal hand_card_selected(card_ui: CardUI)
 signal hand_cards_select_confirmed(cards: Array[CardUI])
+signal enemy_aim_requested
+signal enemy_aim_confirmed(enemies: Array[Node])
 
 # Aim-related events
 signal projectile_aim_started(speed: float, gravity: float, max_rebound: int)

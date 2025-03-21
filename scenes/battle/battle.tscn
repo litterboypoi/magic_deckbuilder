@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cahno8aso5net"]
+[gd_scene load_steps=29 format=3 uid="uid://cahno8aso5net"]
 
 [ext_resource type="Script" path="res://scenes/battle/battle.gd" id="1_4s751"]
 [ext_resource type="Texture2D" uid="uid://cp4iq5fd6j8be" path="res://art/background.png" id="1_ybkl6"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scenes/player/player_handler.gd" id="8_3di7i"]
 [ext_resource type="Resource" uid="uid://bbo24od4aavfj" path="res://enemies/bat/bat_enemy.tres" id="8_d4c2d"]
 [ext_resource type="PackedScene" uid="uid://bnbwu7pkbrwox" path="res://scenes/ui/mana_ui.tscn" id="11_2vu01"]
+[ext_resource type="PackedScene" uid="uid://dlxiifmnl76p3" path="res://scenes/enemy_target_selector/enemy_target_selector.tscn" id="12_3s1xw"]
 [ext_resource type="Script" path="res://scenes/battle/action_order_manager.gd" id="12_gr6sw"]
 [ext_resource type="PackedScene" uid="uid://chry0sgk7t0yf" path="res://scenes/ui/tooltip.tscn" id="12_qx741"]
 [ext_resource type="Script" path="res://scenes/battle/battle_ui_mask.gd" id="13_156m4"]
@@ -84,6 +85,8 @@ stats = ExtResource("4_fwb8a")
 [node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
 
 [node name="CardTargetSelector" parent="." instance=ExtResource("3_vyv1n")]
+
+[node name="EnemyTargetSelector" parent="." instance=ExtResource("12_3s1xw")]
 
 [node name="PlayerHandler" type="Node" parent="." node_paths=PackedStringArray("player", "hand") groups=["player_handler"]]
 script = ExtResource("8_3di7i")

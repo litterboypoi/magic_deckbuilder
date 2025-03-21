@@ -26,8 +26,9 @@ func _async_get_targets(target: Target) -> Array[Node]:
 		Target.RANGE:
 			return location_manager.get_units_in_range(player.location + 1, player.location + 3)
 		Target.SELECT:
-			await player.create_tween().tween_interval(0.1).finished
-			return []
+			Events.enemy_aim_requested.emit()
+			var aim_targets = await Events.enemy_aim_confirmed
+			return aim_targets
 		_:
 			return []
 
